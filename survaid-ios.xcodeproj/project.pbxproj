@@ -1,0 +1,607 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C31EEF992ADDEB4C004DA615 /* survaid_iosApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C31EEF982ADDEB4C004DA615 /* survaid_iosApp.swift */; };
+		C31EEF9B2ADDEB4C004DA615 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C31EEF9A2ADDEB4C004DA615 /* ContentView.swift */; };
+		C31EEF9D2ADDEB4D004DA615 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C31EEF9C2ADDEB4D004DA615 /* Assets.xcassets */; };
+		C31EEFA02ADDEB4D004DA615 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C31EEF9F2ADDEB4D004DA615 /* Preview Assets.xcassets */; };
+		C31EEFAA2ADDEB4E004DA615 /* survaid_iosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C31EEFA92ADDEB4E004DA615 /* survaid_iosTests.swift */; };
+		C31EEFB42ADDEB4E004DA615 /* survaid_iosUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C31EEFB32ADDEB4E004DA615 /* survaid_iosUITests.swift */; };
+		C31EEFB62ADDEB4E004DA615 /* survaid_iosUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C31EEFB52ADDEB4E004DA615 /* survaid_iosUITestsLaunchTests.swift */; };
+		C31EEFCD2ADDF410004DA615 /* MessagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C31EEFCC2ADDF410004DA615 /* MessagesView.swift */; };
+		C31EEFCF2ADDF41F004DA615 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C31EEFCE2ADDF41F004DA615 /* ProfileView.swift */; };
+		C31EEFD12ADDF42F004DA615 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C31EEFD02ADDF42F004DA615 /* SettingsView.swift */; };
+		C31EEFD32ADDF4FD004DA615 /* SurveysView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C31EEFD22ADDF4FD004DA615 /* SurveysView.swift */; };
+		C3545E582AF4095C00221106 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3545E572AF4095C00221106 /* MenuView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C31EEFA62ADDEB4E004DA615 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C31EEF8D2ADDEB4C004DA615 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C31EEF942ADDEB4C004DA615;
+			remoteInfo = "survaid-ios";
+		};
+		C31EEFB02ADDEB4E004DA615 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C31EEF8D2ADDEB4C004DA615 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C31EEF942ADDEB4C004DA615;
+			remoteInfo = "survaid-ios";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		C31EEF952ADDEB4C004DA615 /* survaid-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "survaid-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C31EEF982ADDEB4C004DA615 /* survaid_iosApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = survaid_iosApp.swift; sourceTree = "<group>"; };
+		C31EEF9A2ADDEB4C004DA615 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		C31EEF9C2ADDEB4D004DA615 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C31EEF9F2ADDEB4D004DA615 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		C31EEFA52ADDEB4E004DA615 /* survaid-iosTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "survaid-iosTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C31EEFA92ADDEB4E004DA615 /* survaid_iosTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = survaid_iosTests.swift; sourceTree = "<group>"; };
+		C31EEFAF2ADDEB4E004DA615 /* survaid-iosUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "survaid-iosUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C31EEFB32ADDEB4E004DA615 /* survaid_iosUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = survaid_iosUITests.swift; sourceTree = "<group>"; };
+		C31EEFB52ADDEB4E004DA615 /* survaid_iosUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = survaid_iosUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		C31EEFCC2ADDF410004DA615 /* MessagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesView.swift; sourceTree = "<group>"; };
+		C31EEFCE2ADDF41F004DA615 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		C31EEFD02ADDF42F004DA615 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		C31EEFD22ADDF4FD004DA615 /* SurveysView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveysView.swift; sourceTree = "<group>"; };
+		C3545E572AF4095C00221106 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C31EEF922ADDEB4C004DA615 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C31EEFA22ADDEB4E004DA615 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C31EEFAC2ADDEB4E004DA615 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C31EEF8C2ADDEB4C004DA615 = {
+			isa = PBXGroup;
+			children = (
+				C31EEF972ADDEB4C004DA615 /* survaid-ios */,
+				C31EEFA82ADDEB4E004DA615 /* survaid-iosTests */,
+				C31EEFB22ADDEB4E004DA615 /* survaid-iosUITests */,
+				C31EEF962ADDEB4C004DA615 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		C31EEF962ADDEB4C004DA615 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C31EEF952ADDEB4C004DA615 /* survaid-ios.app */,
+				C31EEFA52ADDEB4E004DA615 /* survaid-iosTests.xctest */,
+				C31EEFAF2ADDEB4E004DA615 /* survaid-iosUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C31EEF972ADDEB4C004DA615 /* survaid-ios */ = {
+			isa = PBXGroup;
+			children = (
+				C31EEF982ADDEB4C004DA615 /* survaid_iosApp.swift */,
+				C31EEF9A2ADDEB4C004DA615 /* ContentView.swift */,
+				C31EEFD22ADDF4FD004DA615 /* SurveysView.swift */,
+				C3545E572AF4095C00221106 /* MenuView.swift */,
+				C31EEFCC2ADDF410004DA615 /* MessagesView.swift */,
+				C31EEFCE2ADDF41F004DA615 /* ProfileView.swift */,
+				C31EEFD02ADDF42F004DA615 /* SettingsView.swift */,
+				C31EEF9C2ADDEB4D004DA615 /* Assets.xcassets */,
+				C31EEF9E2ADDEB4D004DA615 /* Preview Content */,
+			);
+			path = "survaid-ios";
+			sourceTree = "<group>";
+		};
+		C31EEF9E2ADDEB4D004DA615 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				C31EEF9F2ADDEB4D004DA615 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		C31EEFA82ADDEB4E004DA615 /* survaid-iosTests */ = {
+			isa = PBXGroup;
+			children = (
+				C31EEFA92ADDEB4E004DA615 /* survaid_iosTests.swift */,
+			);
+			path = "survaid-iosTests";
+			sourceTree = "<group>";
+		};
+		C31EEFB22ADDEB4E004DA615 /* survaid-iosUITests */ = {
+			isa = PBXGroup;
+			children = (
+				C31EEFB32ADDEB4E004DA615 /* survaid_iosUITests.swift */,
+				C31EEFB52ADDEB4E004DA615 /* survaid_iosUITestsLaunchTests.swift */,
+			);
+			path = "survaid-iosUITests";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C31EEF942ADDEB4C004DA615 /* survaid-ios */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C31EEFB92ADDEB4E004DA615 /* Build configuration list for PBXNativeTarget "survaid-ios" */;
+			buildPhases = (
+				C31EEF912ADDEB4C004DA615 /* Sources */,
+				C31EEF922ADDEB4C004DA615 /* Frameworks */,
+				C31EEF932ADDEB4C004DA615 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "survaid-ios";
+			productName = "survaid-ios";
+			productReference = C31EEF952ADDEB4C004DA615 /* survaid-ios.app */;
+			productType = "com.apple.product-type.application";
+		};
+		C31EEFA42ADDEB4E004DA615 /* survaid-iosTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C31EEFBC2ADDEB4E004DA615 /* Build configuration list for PBXNativeTarget "survaid-iosTests" */;
+			buildPhases = (
+				C31EEFA12ADDEB4E004DA615 /* Sources */,
+				C31EEFA22ADDEB4E004DA615 /* Frameworks */,
+				C31EEFA32ADDEB4E004DA615 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C31EEFA72ADDEB4E004DA615 /* PBXTargetDependency */,
+			);
+			name = "survaid-iosTests";
+			productName = "survaid-iosTests";
+			productReference = C31EEFA52ADDEB4E004DA615 /* survaid-iosTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		C31EEFAE2ADDEB4E004DA615 /* survaid-iosUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C31EEFBF2ADDEB4E004DA615 /* Build configuration list for PBXNativeTarget "survaid-iosUITests" */;
+			buildPhases = (
+				C31EEFAB2ADDEB4E004DA615 /* Sources */,
+				C31EEFAC2ADDEB4E004DA615 /* Frameworks */,
+				C31EEFAD2ADDEB4E004DA615 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C31EEFB12ADDEB4E004DA615 /* PBXTargetDependency */,
+			);
+			name = "survaid-iosUITests";
+			productName = "survaid-iosUITests";
+			productReference = C31EEFAF2ADDEB4E004DA615 /* survaid-iosUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C31EEF8D2ADDEB4C004DA615 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					C31EEF942ADDEB4C004DA615 = {
+						CreatedOnToolsVersion = 15.0;
+					};
+					C31EEFA42ADDEB4E004DA615 = {
+						CreatedOnToolsVersion = 15.0;
+						TestTargetID = C31EEF942ADDEB4C004DA615;
+					};
+					C31EEFAE2ADDEB4E004DA615 = {
+						CreatedOnToolsVersion = 15.0;
+						TestTargetID = C31EEF942ADDEB4C004DA615;
+					};
+				};
+			};
+			buildConfigurationList = C31EEF902ADDEB4C004DA615 /* Build configuration list for PBXProject "survaid-ios" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = C31EEF8C2ADDEB4C004DA615;
+			productRefGroup = C31EEF962ADDEB4C004DA615 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C31EEF942ADDEB4C004DA615 /* survaid-ios */,
+				C31EEFA42ADDEB4E004DA615 /* survaid-iosTests */,
+				C31EEFAE2ADDEB4E004DA615 /* survaid-iosUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C31EEF932ADDEB4C004DA615 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C31EEFA02ADDEB4D004DA615 /* Preview Assets.xcassets in Resources */,
+				C31EEF9D2ADDEB4D004DA615 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C31EEFA32ADDEB4E004DA615 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C31EEFAD2ADDEB4E004DA615 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C31EEF912ADDEB4C004DA615 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C3545E582AF4095C00221106 /* MenuView.swift in Sources */,
+				C31EEFD32ADDF4FD004DA615 /* SurveysView.swift in Sources */,
+				C31EEFCD2ADDF410004DA615 /* MessagesView.swift in Sources */,
+				C31EEFCF2ADDF41F004DA615 /* ProfileView.swift in Sources */,
+				C31EEFD12ADDF42F004DA615 /* SettingsView.swift in Sources */,
+				C31EEF9B2ADDEB4C004DA615 /* ContentView.swift in Sources */,
+				C31EEF992ADDEB4C004DA615 /* survaid_iosApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C31EEFA12ADDEB4E004DA615 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C31EEFAA2ADDEB4E004DA615 /* survaid_iosTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C31EEFAB2ADDEB4E004DA615 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C31EEFB42ADDEB4E004DA615 /* survaid_iosUITests.swift in Sources */,
+				C31EEFB62ADDEB4E004DA615 /* survaid_iosUITestsLaunchTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C31EEFA72ADDEB4E004DA615 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C31EEF942ADDEB4C004DA615 /* survaid-ios */;
+			targetProxy = C31EEFA62ADDEB4E004DA615 /* PBXContainerItemProxy */;
+		};
+		C31EEFB12ADDEB4E004DA615 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C31EEF942ADDEB4C004DA615 /* survaid-ios */;
+			targetProxy = C31EEFB02ADDEB4E004DA615 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		C31EEFB72ADDEB4E004DA615 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		C31EEFB82ADDEB4E004DA615 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		C31EEFBA2ADDEB4E004DA615 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"survaid-ios/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.jamesliang.survaid-ios";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C31EEFBB2ADDEB4E004DA615 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"survaid-ios/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.jamesliang.survaid-ios";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		C31EEFBD2ADDEB4E004DA615 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.jamesliang.survaid-iosTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/survaid-ios.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/survaid-ios";
+			};
+			name = Debug;
+		};
+		C31EEFBE2ADDEB4E004DA615 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.jamesliang.survaid-iosTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/survaid-ios.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/survaid-ios";
+			};
+			name = Release;
+		};
+		C31EEFC02ADDEB4E004DA615 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.jamesliang.survaid-iosUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "survaid-ios";
+			};
+			name = Debug;
+		};
+		C31EEFC12ADDEB4E004DA615 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.jamesliang.survaid-iosUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "survaid-ios";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C31EEF902ADDEB4C004DA615 /* Build configuration list for PBXProject "survaid-ios" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C31EEFB72ADDEB4E004DA615 /* Debug */,
+				C31EEFB82ADDEB4E004DA615 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C31EEFB92ADDEB4E004DA615 /* Build configuration list for PBXNativeTarget "survaid-ios" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C31EEFBA2ADDEB4E004DA615 /* Debug */,
+				C31EEFBB2ADDEB4E004DA615 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C31EEFBC2ADDEB4E004DA615 /* Build configuration list for PBXNativeTarget "survaid-iosTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C31EEFBD2ADDEB4E004DA615 /* Debug */,
+				C31EEFBE2ADDEB4E004DA615 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C31EEFBF2ADDEB4E004DA615 /* Build configuration list for PBXNativeTarget "survaid-iosUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C31EEFC02ADDEB4E004DA615 /* Debug */,
+				C31EEFC12ADDEB4E004DA615 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C31EEF8D2ADDEB4C004DA615 /* Project object */;
+}
