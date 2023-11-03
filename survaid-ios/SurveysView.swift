@@ -10,15 +10,42 @@ import SwiftUI
 struct SurveysView: View {
     var body: some View {
         ScrollView {
+            HStack {
+                Image(systemName: "doc.fill")
+                    .font(.system(size: 40))
+                    .foregroundColor(.blue)
+                Text("Surveys")
+                    .font(.title)
+                    .fontWeight(.bold)
+                    .foregroundColor(.blue)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.top, 20)
+            .padding(.horizontal, 20)
             LazyVStack {
-                ForEach(1...100, id: \.self) { row in
+                ForEach(1...10, id: \.self) { row in
                     HStack {
-                        Image(systemName: "doc").foregroundColor(.black)
-                        Text("\(row): Survey").onAppear{
-                            print("\(row) Survey")
-                        }
+                        VStack {
+                            HStack {
+                                Image(systemName: "doc.fill").foregroundColor(.black).padding(.leading, 10).padding(.bottom, 10)
+                                Text("Survey").onAppear{
+                                    print("Survey No. \(row)")
+                                }.padding(.bottom, 10)
+                                Spacer()
+                                Text("Price: $\(row).99").padding(.trailing, 10).padding(.bottom, 10)
+                            }
+                            Image("Sleep").resizable().aspectRatio(contentMode: .fit)
+                            HStack {
+                                Image(systemName: "person.2.fill").foregroundColor(.black).padding(.leading, 10).padding(.top, 10)
+                                Text("\(row) Comments").padding(.top, 10)
+                                Spacer()
+                                Text("\(row) Participants").padding(.trailing, 10).padding(.top, 10)
+                            }
+                        }.frame(height: 300).overlay(
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(Color.black, lineWidth: 2))
                     }
-                }.padding(30)
+                }.padding(10)
             }
         }
     }

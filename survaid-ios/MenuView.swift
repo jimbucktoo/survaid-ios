@@ -12,7 +12,7 @@ struct MenuView: View {
         TabView {
             SurveysView()
                 .tabItem {
-                    Image(systemName: "house")
+                    Image(systemName: "doc")
                     Text("Surveys")
                 }.tint(.blue)
             MessagesView()
