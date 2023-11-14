@@ -41,13 +41,14 @@ struct SurveysView: View {
                                 Spacer()
                                 Text("\(row) Participants").padding(.trailing, 10).padding(.top, 10)
                             }
-                        }.frame(height: 300).overlay(
+                        }
+                        .frame(height: 300).overlay(
                             RoundedRectangle(cornerRadius: 10)
-                                .stroke(Color.black, lineWidth: 2))
-                    }
+                                .stroke(Color.black, lineWidth: 2)).background(Color.white)
+                    }.background(Color.black).cornerRadius(10)
                 }.padding(10)
-            }
-        }
+            }.background(Color.black)
+        }.background(Color.black)
     }
 }
 

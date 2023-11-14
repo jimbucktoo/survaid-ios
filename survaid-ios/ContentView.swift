@@ -16,15 +16,20 @@ struct ContentView: View {
         NavigationView {
             ZStack {
                 Color.blue.ignoresSafeArea()
-                Circle().scale(1.7).foregroundColor(.white.opacity(0.15))
-                Circle().scale(1.35).foregroundColor(.white)
+                Circle().scale(1.7).foregroundColor(.orange)
+                Circle().scale(1.35).foregroundColor(.black)
                 VStack {
                     Text("Survaid").font(.largeTitle).bold().padding().foregroundColor(.blue)
-                    
-                    TextField("Username", text: $username).padding().frame(width: 300, height: 50).background(Color.black.opacity(0.05)).cornerRadius(10).multilineTextAlignment(.center)
-                    
-                    SecureField("Password", text: $password).padding().frame(width: 300, height: 50).background(Color.black.opacity(0.05)).cornerRadius(10).multilineTextAlignment(.center)
-                    
+                    TextField("",
+                              text: $username,
+                              prompt: Text("Username")
+                                        .foregroundColor(.black)
+                    ).frame(width: 300, height: 50, alignment: .center).background(Color.white).cornerRadius(10).multilineTextAlignment(.center)
+                    SecureField("",
+                                text: $password,
+                                prompt: Text("Password")
+                                          .foregroundColor(.black)
+                    ).frame(width: 300, height: 50, alignment: .center).background(Color.white).cornerRadius(10).multilineTextAlignment(.center)
                     NavigationLink(destination: MenuView(), label: {
                         Button("Login") {
                             
