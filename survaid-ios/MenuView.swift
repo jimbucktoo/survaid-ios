@@ -50,7 +50,7 @@ struct MenuView: View {
         .background(Color.black)
         .onAppear() {
             UITabBar.appearance().backgroundColor = .black
-        }.tint(.blue)
+        }.tint(.survaidBlue)
         .navigationBarBackButtonHidden(true)
     }
 }

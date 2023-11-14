@@ -13,11 +13,11 @@ struct MessagesView: View {
             HStack {
                 Image(systemName: "message.fill")
                     .font(.system(size: 40))
-                    .foregroundColor(.blue)
+                    .foregroundColor(.survaidBlue)
                 Text("Messages")
                     .font(.title)
                     .fontWeight(.bold)
-                    .foregroundColor(.blue)
+                    .foregroundColor(.survaidBlue)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.top, 20)

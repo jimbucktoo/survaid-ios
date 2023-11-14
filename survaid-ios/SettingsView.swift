@@ -13,11 +13,11 @@ struct SettingsView: View {
             HStack {
                 Image(systemName: "gearshape.fill")
                     .font(.system(size: 40))
-                    .foregroundColor(.blue)
+                    .foregroundColor(.survaidBlue)
                 Text("Settings")
                     .font(.title)
                     .fontWeight(.bold)
-                    .foregroundColor(.blue)
+                    .foregroundColor(.survaidBlue)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.top, 20)

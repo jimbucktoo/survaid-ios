@@ -15,11 +15,14 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                Color.blue.ignoresSafeArea()
-                Circle().scale(1.7).foregroundColor(.orange)
+                Color.survaidBlue.ignoresSafeArea()
+                Circle().scale(1.7).foregroundColor(.survaidOrange)
                 Circle().scale(1.35).foregroundColor(.black)
                 VStack {
-                    Text("Survaid").font(.largeTitle).bold().padding().foregroundColor(.blue)
+                    HStack(spacing: 0) {
+                        Text("Surv").font(.largeTitle).bold().foregroundColor(.survaidBlue)
+                        Text("aid").font(.largeTitle).bold().foregroundColor(.survaidOrange)
+                    }.padding()
                     TextField("",
                               text: $username,
                               prompt: Text("Username")

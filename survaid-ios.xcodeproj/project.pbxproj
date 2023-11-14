@@ -18,6 +18,8 @@
 		C31EEFCF2ADDF41F004DA615 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C31EEFCE2ADDF41F004DA615 /* ProfileView.swift */; };
 		C31EEFD12ADDF42F004DA615 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C31EEFD02ADDF42F004DA615 /* SettingsView.swift */; };
 		C31EEFD32ADDF4FD004DA615 /* SurveysView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C31EEFD22ADDF4FD004DA615 /* SurveysView.swift */; };
+		C335D55B2B04019C008C611D /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = C335D55A2B04019C008C611D /* Color.swift */; };
+		C335D55D2B040DB9008C611D /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C335D55C2B040DB9008C611D /* CardView.swift */; };
 		C3545E582AF4095C00221106 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3545E572AF4095C00221106 /* MenuView.swift */; };
 /* End PBXBuildFile section */
 
@@ -53,6 +55,8 @@
 		C31EEFCE2ADDF41F004DA615 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		C31EEFD02ADDF42F004DA615 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		C31EEFD22ADDF4FD004DA615 /* SurveysView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveysView.swift; sourceTree = "<group>"; };
+		C335D55A2B04019C008C611D /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		C335D55C2B040DB9008C611D /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		C3545E572AF4095C00221106 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -111,6 +115,8 @@
 				C31EEFCC2ADDF410004DA615 /* MessagesView.swift */,
 				C31EEFCE2ADDF41F004DA615 /* ProfileView.swift */,
 				C31EEFD02ADDF42F004DA615 /* SettingsView.swift */,
+				C335D55A2B04019C008C611D /* Color.swift */,
+				C335D55C2B040DB9008C611D /* CardView.swift */,
 				C31EEF9C2ADDEB4D004DA615 /* Assets.xcassets */,
 				C31EEF9E2ADDEB4D004DA615 /* Preview Content */,
 			);
@@ -273,10 +279,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				C3545E582AF4095C00221106 /* MenuView.swift in Sources */,
+				C335D55D2B040DB9008C611D /* CardView.swift in Sources */,
 				C31EEFD32ADDF4FD004DA615 /* SurveysView.swift in Sources */,
 				C31EEFCD2ADDF410004DA615 /* MessagesView.swift in Sources */,
 				C31EEFCF2ADDF41F004DA615 /* ProfileView.swift in Sources */,
 				C31EEFD12ADDF42F004DA615 /* SettingsView.swift in Sources */,
+				C335D55B2B04019C008C611D /* Color.swift in Sources */,
 				C31EEF9B2ADDEB4C004DA615 /* ContentView.swift in Sources */,
 				C31EEF992ADDEB4C004DA615 /* survaid_iosApp.swift in Sources */,
 			);
