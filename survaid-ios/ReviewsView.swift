@@ -1,13 +1,13 @@
 import SwiftUI
 
-struct SettingsView: View {
+struct ReviewsView: View {
     var body: some View {
         ScrollView {
             HStack {
-                Image(systemName: "gearshape.fill")
+                Image(systemName: "person.text.rectangle.fill")
                     .font(.system(size: 40))
                     .foregroundColor(.survaidBlue)
-                Text("Settings")
+                Text("Reviews")
                     .font(.title)
                     .fontWeight(.bold)
                     .foregroundColor(.survaidBlue)
@@ -20,5 +20,5 @@ struct SettingsView: View {
 }
 
 #Preview {
-    SettingsView()
+    ReviewsView()
 }

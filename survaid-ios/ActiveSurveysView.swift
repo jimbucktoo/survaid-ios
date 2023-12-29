@@ -1,51 +1,37 @@
 import SwiftUI
 
-struct MessagesView: View {
+struct ActiveSurveysView: View {
     var body: some View {
         ScrollView {
             HStack {
-                Image(systemName: "message.fill")
+                Image(systemName: "doc")
                     .font(.system(size: 40))
                     .foregroundColor(.survaidBlue)
-                Text("Messages")
+                Text("Active Surveys")
                     .font(.title)
                     .fontWeight(.bold)
                     .foregroundColor(.survaidBlue)
-                Spacer()
-                NavigationLink(destination: NewMessageView()) {
-                    Image(systemName: "square.and.pencil")
-                        .font(.title)
-                        .foregroundColor(.blue)
-                }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.top, 20)
             .padding(.horizontal, 20)
             LazyVStack {
-                ForEach(1...1, id: \.self) { row in
+                ForEach(1...4, id: \.self) { row in
                     Divider().background(Color.white)
-                    NavigationLink(destination: MessageView()) {
+                    NavigationLink(destination: SurveyView()) {
                         HStack {
-                            Image("Alex")
+                            Image("Sleep")
                                 .resizable()
                                 .scaledToFill()
                                 .frame(width: 70, height: 70)
                                 .clipShape(Circle())
-                            VStack (alignment: .leading) {
-                                HStack {
-                                    Text("Alex Gallion")
-                                        .foregroundColor(.white)
-                                        .fontWeight(.bold)
-                                        .padding(.top, 4)
-                                        .padding(.leading, 4)
-                                    Spacer()
-                                    Text("13m")
-                                        .foregroundColor(.white)
-                                }
-                                Text("I'm good, thanks!")
+                            VStack {
+                                Text("Sleep Apnea Survey")
                                     .foregroundColor(.white)
+                                    .fontWeight(.bold)
                                     .padding(.top, 4)
                                     .padding(.leading, 4)
+                                Spacer()
                             }
                             .padding(.bottom, 10)
                             .padding(.leading, 10)
@@ -56,11 +42,11 @@ struct MessagesView: View {
                         .padding(.bottom, 10)
                     }
                 }
-            }.padding(.leading, 10)
+            }
         }.background(Color.black)
     }
 }
 
 #Preview {
-    MessagesView()
+    ActiveSurveysView()
 }

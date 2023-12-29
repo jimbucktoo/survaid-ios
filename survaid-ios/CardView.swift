@@ -1,15 +1,7 @@
-//
-//  CardView.swift
-//  survaid-ios
-//
-//  Created by James Liang on 11/14/23.
-//
-
 import SwiftUI
 
 struct CardView: View{
     var body: some View{
-        
         VStack(alignment: .leading) {
             Image("Sleep")
                 .resizable()
@@ -21,13 +13,16 @@ struct CardView: View{
                 .offset(x: -110)
                 .offset(y: 20)
             Text("Sleep Apnea Survey")
+                .foregroundColor(.white)
                 .fontWeight(.bold)
                 .offset(x: 40)
                 .offset(y: -80)
             Text("Completed: 100%")
+                .foregroundColor(.white)
                 .offset(x: 40)
                 .offset(y: -80)
             Text("Rating: 3/5")
+                .foregroundColor(.white)
                 .offset(x: 40)
                 .offset(y: -80)
         }

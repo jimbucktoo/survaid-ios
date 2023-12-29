@@ -1,10 +1,3 @@
-//
-//  ProfileView.swift
-//  survaid-ios
-//
-//  Created by James Liang on 10/16/23.
-//
-
 import SwiftUI
 
 struct ProfileView: View {
@@ -37,12 +30,12 @@ struct ProfileView: View {
                         .offset(y: 0)
                         .offset(x: -80)
                     Text("Jimmy Liang")
-                        .foregroundColor(.survaidBlue)
+                        .foregroundColor(.white)
                         .fontWeight(.bold)
                         .offset(y: -30)
                         .offset(x: 50)
                     Text("@JimmyLiang")
-                        .foregroundColor(.survaidBlue)
+                        .foregroundColor(.white)
                         .offset(y: 0)
                         .offset(x: 50)
                     Text("★★★★✩ (31)")
@@ -65,22 +58,18 @@ struct ProfileView: View {
                 ZStack {
                     Rectangle().fill(Color.black).frame(height: 320)
                     VStack {
-                        Button(action: {
-                        }) {
+                        NavigationLink(destination: ParticipantInformationView()) {
                             HStack {
                                 Image(systemName: "person.fill")
                                     .renderingMode(.original)
                                     .font(.title)
-                                    .foregroundColor(.black)
+                                    .foregroundColor(.white)
                                     .frame(width: 30, height: 30)
                                     .padding(.leading, 10)
-                                
                                 Spacer()
-                                
-                                Text("About Jimmy")
+                                Text("Participant Information")
                                     .font(.headline)
-                                    .foregroundColor(.black)
-                                
+                                    .foregroundColor(.white)
                                 Spacer()
                             }
                             .padding()
@@ -93,22 +82,18 @@ struct ProfileView: View {
                             )
                             .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
                         }
-                        Button(action: {
-                        }) {
+                        NavigationLink(destination: ActiveSurveysView()) {
                             HStack {
-                                Image(systemName: "creditcard.fill")
+                                Image(systemName: "doc")
                                     .renderingMode(.original)
                                     .font(.title)
-                                    .foregroundColor(.black)
+                                    .foregroundColor(.white)
                                     .frame(width: 30, height: 30)
                                     .padding(.leading, 10)
-                                
                                 Spacer()
-                                
-                                Text("Wallet")
+                                Text("Active Surveys")
                                     .font(.headline)
-                                    .foregroundColor(.black)
-                                
+                                    .foregroundColor(.white)
                                 Spacer()
                             }
                             .padding()
@@ -121,22 +106,18 @@ struct ProfileView: View {
                             )
                             .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
                         }
-                        Button(action: {
-                        }) {
+                        NavigationLink(destination: CompletedSurveysView()) {
                             HStack {
                                 Image(systemName: "doc.fill")
                                     .renderingMode(.original)
                                     .font(.title)
-                                    .foregroundColor(.black)
+                                    .foregroundColor(.white)
                                     .frame(width: 30, height: 30)
                                     .padding(.leading, 10)
-                                
                                 Spacer()
-                                
                                 Text("Completed Surveys")
                                     .font(.headline)
-                                    .foregroundColor(.black)
-                                
+                                    .foregroundColor(.white)
                                 Spacer()
                             }
                             .padding()
@@ -149,22 +130,18 @@ struct ProfileView: View {
                             )
                             .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
                         }
-                        Button(action: {
-                        }) {
+                        NavigationLink(destination: ReviewsView()) {
                             HStack {
                                 Image(systemName: "person.text.rectangle.fill")
                                     .renderingMode(.original)
                                     .font(.title)
-                                    .foregroundColor(.black)
+                                    .foregroundColor(.white)
                                     .frame(width: 30, height: 30)
                                     .padding(.leading, 10)
-                                
                                 Spacer()
-                                
                                 Text("Reviews")
                                     .font(.headline)
-                                    .foregroundColor(.black)
-                                
+                                    .foregroundColor(.white)
                                 Spacer()
                             }
                             .padding()

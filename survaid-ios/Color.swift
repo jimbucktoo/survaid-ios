@@ -1,10 +1,3 @@
-//
-//  Color.swift
-//  survaid-ios
-//
-//  Created by James Liang on 11/14/23.
-//
-
 import SwiftUI
 
 extension Color {

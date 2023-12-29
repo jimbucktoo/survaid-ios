@@ -1,10 +1,3 @@
-//
-//  MenuView.swift
-//  survaid-ios
-//
-//  Created by James Liang on 11/2/23.
-//
-
 import SwiftUI
 
 struct MenuView: View {
