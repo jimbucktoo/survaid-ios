@@ -22,17 +22,13 @@ struct SurveysView: View {
                             VStack {
                                 HStack {
                                     Image(systemName: "doc.fill").foregroundColor(.survaidBlue).padding(.leading, 10).padding(.bottom, 10)
-                                    Text("Sleep Apnea Survey").foregroundColor(.survaidBlue).fontWeight(.bold).onAppear{
-                                        print("Survey No. \(row)")
-                                    }.padding(.bottom, 10)
+                                    Text("Sleep Apnea Survey").foregroundColor(.survaidBlue).fontWeight(.bold).padding(.bottom, 10)
                                     Spacer()
                                     Text("\(row) min").foregroundColor(.survaidOrange).fontWeight(.bold).padding(.trailing, 10).padding(.bottom, 10)
                                 }
                                 HStack {
                                     Image(systemName: "person.fill").foregroundColor(.black).padding(.leading, 10).padding(.bottom, 10)
-                                    Text("jimbucktoo").foregroundColor(.black).onAppear{
-                                        print("Survey No. \(row)")
-                                    }.padding(.bottom, 10)
+                                    Text("jimbucktoo").foregroundColor(.black).padding(.bottom, 10)
                                     Spacer()
                                     Text("Price: $\(row).99").foregroundColor(.black).padding(.trailing, 10).padding(.bottom, 10)
                                 }

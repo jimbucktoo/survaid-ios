@@ -6,7 +6,9 @@ struct SurveyView: View {
             ScrollView {
                 VStack {
                     VStack {
-                        Image("Sleep").resizable().aspectRatio(contentMode: .fit)
+                        NavigationLink(destination: QuestionView()) {
+                            Image("Sleep").resizable().aspectRatio(contentMode: .fit)
+                        }
                         VStack {
                            Text("Status: Active")
                               .foregroundColor(.white)
@@ -24,9 +26,7 @@ struct SurveyView: View {
                             .padding()
                         HStack {
                             Image(systemName: "person.fill").foregroundColor(.black).padding(.leading, 10).padding(.top, 10).padding(.bottom, 10)
-                            Text("jimbucktoo").foregroundColor(.black).onAppear{
-                                print("Sleep Apnea Survey")
-                            }.padding(.top, 10)
+                            Text("jimbucktoo").foregroundColor(.black).padding(.top, 10)
                             Spacer()
                             Text("Price: $1.99").foregroundColor(.black).padding(.trailing, 10).padding(.top, 10)
                         }
