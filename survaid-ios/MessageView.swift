@@ -15,7 +15,7 @@ struct MessageView: View {
         Message(content: "How are you?", isSentByUser: true, timestamp: Date()),
         Message(content: "I'm good, thanks!", isSentByUser: false, timestamp: Date())
     ]
-
+    
     var body: some View {
         VStack {
             HStack {
@@ -30,7 +30,7 @@ struct MessageView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.top, 20)
             .padding(.horizontal, 20)
-
+            
             ScrollView {
                 VStack(alignment: .leading, spacing: 10) {
                     ForEach(messages) { message in
@@ -42,11 +42,11 @@ struct MessageView: View {
                 .padding(.horizontal, 20)
                 .padding(.bottom, 20)
             }
-
+            
             HStack {
                 TextField("Message", text: $newMessageText)
                     .textFieldStyle(.roundedBorder)
-
+                
                 Button(action: sendMessage) {
                     Text("Send")
                         .padding(.horizontal, 20)
@@ -62,10 +62,10 @@ struct MessageView: View {
         }
         .background(Color.black.edgesIgnoringSafeArea(.all))
     }
-
+    
     func sendMessage() {
         guard !newMessageText.isEmpty else { return }
-
+        
         messages.append(Message(content: newMessageText,
                                 isSentByUser: true,
                                 timestamp: Date()))
@@ -77,7 +77,7 @@ struct MessageBubble: View {
     let content: String
     let isSentByUser: Bool
     let timestamp: Date
-
+    
     var body: some View {
         HStack {
             if isSentByUser {
@@ -90,7 +90,7 @@ struct MessageBubble: View {
                     .foregroundColor(.white)
                     .cornerRadius(10)
                     .padding(5)
-
+                
                 Text("\(timestamp, formatter: DateFormatter.timeStampFormatter)")
                     .font(.caption)
                     .foregroundColor(.gray)

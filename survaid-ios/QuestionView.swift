@@ -20,120 +20,118 @@ struct QuestionView: View {
     @State private var timer: Timer?
     
     var body: some View {
-        NavigationView {
-            ZStack {
-                Color.black.ignoresSafeArea()
-                VStack {
-                    Spacer()
-                    Text("Quality of sleep in the past week")
-                        .font(.title)
-                        .foregroundColor(.white)
-                        .multilineTextAlignment(.center)
-                        .padding([.leading, .trailing], 20)
-                    Spacer()
-                    Text("Please enter your quality of sleep over the past week")
-                        .font(.system(size: 20))
-                        .foregroundColor(.white)
-                        .padding(.top, 10)
-                        .padding([.leading, .trailing], 20)
-                    Spacer()
-                    Picker("Select Input Type", selection: $selectedInputType) {
-                        Text("Text Input").tag(InputType.textInput)
-                        Text("Slider").tag(InputType.slider)
-                        Text("Multiple Choice").tag(InputType.multipleChoice)
-                        Text("Recording").tag(InputType.recording)
-                    }
-                    .pickerStyle(.menu)
-                    .padding(.horizontal, 40)
+        ZStack {
+            Color.black.ignoresSafeArea()
+            VStack {
+                Spacer()
+                Text("Quality of sleep in the past week")
+                    .font(.title)
                     .foregroundColor(.white)
-                    Spacer()
+                    .multilineTextAlignment(.center)
+                    .padding([.leading, .trailing], 20)
+                Spacer()
+                Text("Please enter your quality of sleep over the past week")
+                    .font(.system(size: 20))
+                    .foregroundColor(.white)
+                    .padding(.top, 10)
+                    .padding([.leading, .trailing], 20)
+                Spacer()
+                Picker("Select Input Type", selection: $selectedInputType) {
+                    Text("Text Input").tag(InputType.textInput)
+                    Text("Slider").tag(InputType.slider)
+                    Text("Multiple Choice").tag(InputType.multipleChoice)
+                    Text("Recording").tag(InputType.recording)
+                }
+                .pickerStyle(.menu)
+                .padding(.horizontal, 40)
+                .foregroundColor(.white)
+                Spacer()
+                
+                switch selectedInputType {
+                case .textInput:
+                    TextField("Enter Response Here", text: $textInputValue)
+                        .padding([.leading, .trailing], 20)
+                        .foregroundColor(.black)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .padding(.horizontal)
+                        .multilineTextAlignment(.center)
                     
-                    switch selectedInputType {
-                    case .textInput:
-                        TextField("Enter Response Here", text: $textInputValue)
-                            .padding([.leading, .trailing], 20)
-                            .foregroundColor(.black)
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                            .padding(.horizontal)
-                            .multilineTextAlignment(.center)
-                        
-                    case .slider:
-                        Text("Slider Value: \(Int(sliderValue))")
-                            .foregroundColor(.white)
-                        Slider(value: $sliderValue, in: minInput...maxInput, step: interval)
-                            .padding([.leading, .trailing], 20)
-                        
-                    case .multipleChoice:
-                        Picker(selection: $pickerValue, label: Text("Multiple Choice")) {
-                            ForEach(0 ..< options.count, id: \.self) { index in
-                                Text("\(self.options[index])").foregroundColor(Color.white)
-                            }
+                case .slider:
+                    Text("Slider Value: \(Int(sliderValue))")
+                        .foregroundColor(.white)
+                    Slider(value: $sliderValue, in: minInput...maxInput, step: interval)
+                        .padding([.leading, .trailing], 20)
+                    
+                case .multipleChoice:
+                    Picker(selection: $pickerValue, label: Text("Multiple Choice")) {
+                        ForEach(0 ..< options.count, id: \.self) { index in
+                            Text("\(self.options[index])").foregroundColor(Color.white)
                         }
-                        .pickerStyle(WheelPickerStyle())
+                    }
+                    .pickerStyle(WheelPickerStyle())
                     
-                    case .recording:
-                        VStack {
-                            if isRecording {
-                                Text(recordingTime > 0 ? "Recording Time: \(recordingTime) seconds" : "Recording Completed")
-                                    .font(.system(size: 20))
-                                    .foregroundColor(.white)
-                                    .padding(.bottom, 20)
-                            } else {
-                                Text(recordingTime > 0 ? "Start Recording" : "Recording Completed")
-                                    .font(.system(size: 20))
-                                    .foregroundColor(.white)
-                                    .padding(.bottom, 20)
+                case .recording:
+                    VStack {
+                        if isRecording {
+                            Text(recordingTime > 0 ? "Recording Time: \(recordingTime) seconds" : "Recording Completed")
+                                .font(.system(size: 20))
+                                .foregroundColor(.white)
+                                .padding(.bottom, 20)
+                        } else {
+                            Text(recordingTime > 0 ? "Start Recording" : "Recording Completed")
+                                .font(.system(size: 20))
+                                .foregroundColor(.white)
+                                .padding(.bottom, 20)
+                        }
+                        
+                        if isRecording {
+                            Button(action: {
+                                startRecording()
+                            }) {
+                                Image(systemName: "stop.circle.fill")
+                                    .font(.system(size: 70))
+                                    .foregroundColor(.red)
+                                    .padding(1)
+                                    .background(Color.white)
+                                    .clipShape(Circle())
                             }
-                            
-                            if isRecording {
+                            .buttonStyle(PlainButtonStyle())
+                        } else {
+                            if recordingTime > 0 {
                                 Button(action: {
                                     startRecording()
                                 }) {
-                                    Image(systemName: "stop.circle.fill")
+                                    Image(systemName: "circle.fill")
                                         .font(.system(size: 70))
                                         .foregroundColor(.red)
                                         .padding(1)
                                         .background(Color.white)
                                         .clipShape(Circle())
                                 }
-                                .buttonStyle(PlainButtonStyle())
                             } else {
-                                if recordingTime > 0 {
-                                    Button(action: {
-                                        startRecording()
-                                    }) {
-                                        Image(systemName: "circle.fill")
-                                            .font(.system(size: 70))
-                                            .foregroundColor(.red)
-                                            .padding(1)
-                                            .background(Color.white)
-                                            .clipShape(Circle())
-                                    }
-                                } else {
-                                    Button(action: {
-                                        startRecording()
-                                    }) {
-                                        Image(systemName: "arrow.counterclockwise.circle.fill")
-                                            .font(.system(size: 70))
-                                            .foregroundColor(.red)
-                                            .padding(1)
-                                            .background(Color.white)
-                                            .clipShape(Circle())
-                                    }
+                                Button(action: {
+                                    startRecording()
+                                }) {
+                                    Image(systemName: "arrow.counterclockwise.circle.fill")
+                                        .font(.system(size: 70))
+                                        .foregroundColor(.red)
+                                        .padding(1)
+                                        .background(Color.white)
+                                        .clipShape(Circle())
                                 }
                             }
                         }
                     }
-                    Spacer()
-                    Button("Next Question") {
-                    }
-                    .padding(20)
-                    .background(Color.survaidBlue)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
-                    .padding()
-                    Spacer()
                 }
+                Spacer()
+                Button("Next Question") {
+                }
+                .padding(20)
+                .background(Color.survaidBlue)
+                .foregroundColor(.white)
+                .cornerRadius(10)
+                .padding()
+                Spacer()
             }
         }
     }
