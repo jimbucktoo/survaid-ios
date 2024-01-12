@@ -1,6 +1,23 @@
 import SwiftUI
+import FirebaseDatabase
+import FirebaseDatabaseSwift
 
 struct SurveysView: View {
+    
+    var ref = Database.database().reference()
+    
+    func readValue() {
+        ref.child("surveys").observeSingleEvent(of: .value, with: { snapshot in
+            print(snapshot.value ?? "No Dice")
+        }) { error in
+            print(error.localizedDescription)
+        }
+    }
+    
+    init() {
+        readValue()
+    }
+    
     var body: some View {
         NavigationView {
             ScrollView {
