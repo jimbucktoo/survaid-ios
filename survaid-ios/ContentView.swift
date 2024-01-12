@@ -19,12 +19,12 @@ struct ContentView: View {
                     TextField("",
                               text: $username,
                               prompt: Text("Username")
-                                        .foregroundColor(.black)
+                        .foregroundColor(.black)
                     ).frame(width: 300, height: 50, alignment: .center).background(Color.white).cornerRadius(10).multilineTextAlignment(.center)
                     SecureField("",
                                 text: $password,
                                 prompt: Text("Password")
-                                          .foregroundColor(.black)
+                        .foregroundColor(.black)
                     ).frame(width: 300, height: 50, alignment: .center).background(Color.white).cornerRadius(10).multilineTextAlignment(.center)
                     NavigationLink(destination: MenuView(), label: {
                         Button("Login") {

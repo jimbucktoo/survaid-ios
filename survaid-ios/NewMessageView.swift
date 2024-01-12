@@ -11,7 +11,7 @@ struct NewMessageView: View {
     @State private var newMessageText: String = ""
     @State private var recipient: String = ""
     @State private var messages: [NewMessage] = []
-
+    
     var body: some View {
         VStack {
             HStack {
@@ -37,7 +37,7 @@ struct NewMessageView: View {
             }
             .padding(.horizontal, 20)
             .padding(.bottom, 10)
-
+            
             ScrollView {
                 VStack(alignment: .leading, spacing: 10) {
                     ForEach(messages) { message in
@@ -49,12 +49,12 @@ struct NewMessageView: View {
                 .padding(.horizontal, 20)
                 .padding(.bottom, 20)
             }
-
+            
             HStack {
                 TextField("Message", text: $newMessageText)
                     .textFieldStyle(.roundedBorder)
                     .background(Color.red)
-
+                
                 Button(action: sendMessage) {
                     Text("Send")
                         .padding(.horizontal, 20)
@@ -70,13 +70,13 @@ struct NewMessageView: View {
         }
         .background(Color.black.edgesIgnoringSafeArea(.all))
     }
-
+    
     func sendMessage() {
         guard !newMessageText.isEmpty else { return }
-
+        
         messages.append(NewMessage(content: newMessageText,
-                                isSentByUser: true,
-                                timestamp: Date()))
+                                   isSentByUser: true,
+                                   timestamp: Date()))
         newMessageText = ""
     }
 }
@@ -85,7 +85,7 @@ struct NewMessageBubble: View {
     let content: String
     let isSentByUser: Bool
     let timestamp: Date
-
+    
     var body: some View {
         HStack {
             if isSentByUser {
@@ -98,7 +98,7 @@ struct NewMessageBubble: View {
                     .foregroundColor(.white)
                     .cornerRadius(10)
                     .padding(5)
-
+                
                 Text("\(timestamp, formatter: DateFormatter.timeStampFormatter)")
                     .font(.caption)
                     .foregroundColor(.gray)
