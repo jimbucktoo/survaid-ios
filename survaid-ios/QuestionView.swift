@@ -1,22 +1,11 @@
 import SwiftUI
 import AVFoundation
 import UIKit
+import FirebaseDatabase
+import FirebaseDatabaseSwift
 
 struct QuestionView: View {
     
-    struct SurveyQuestion {
-        enum QuestionType {
-            case textInput, slider, multipleChoice, recording, imageCapture
-        }
-        
-        let type: QuestionType
-        let prompt: String
-    }
-    @State private var selectedQuestionType: SurveyQuestion.QuestionType
-    
-    init() {
-        _selectedQuestionType = State(initialValue: surveyQuestions.first?.type ?? .imageCapture)
-    }
     @State private var sliderValue = 5.0
     @State private var minInput = 1.0
     @State private var maxInput = 10.0
@@ -37,6 +26,24 @@ struct QuestionView: View {
     
     @State private var questionIndex = 0
     
+    var ref = Database.database().reference()
+    
+    @State private var selectedQuestionType: SurveyQuestion.QuestionType
+    
+    init() {
+        _selectedQuestionType = State(initialValue: surveyQuestions.first?.type ?? .imageCapture)
+        readValue()
+    }
+    
+    struct SurveyQuestion {
+        enum QuestionType {
+            case textInput, slider, multipleChoice, recording, imageCapture
+        }
+        
+        let type: QuestionType
+        let prompt: String
+    }
+    
     let surveyQuestions: [SurveyQuestion] = [
         SurveyQuestion(type: .textInput, prompt: "Describe your quality of sleep over the past week."),
         SurveyQuestion(type: .multipleChoice, prompt: "On a scale of 1 to 10, how would you rate your stress level?"),
@@ -44,6 +51,18 @@ struct QuestionView: View {
         SurveyQuestion(type: .recording, prompt: "Record your sleep session"),
         SurveyQuestion(type: .imageCapture, prompt: "Take a picture of your sleeping environment"),
     ]
+    
+    func readValue() {
+        ref.child("surveys/1/questions").observeSingleEvent(of: .value, with: { snapshot in
+            if let surveyData = snapshot.value as? NSArray {
+                print(surveyData[1])
+            } else {
+                print("Unable to access data or data is not in NSDictionary format.")
+            }
+        }) { error in
+            print(error.localizedDescription)
+        }
+    }
     
     var currentQuestion: SurveyQuestion {
         return surveyQuestions[questionIndex]
