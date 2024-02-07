@@ -114,8 +114,6 @@ extension DateFormatter {
     }()
 }
 
-struct MessageView_Previews: PreviewProvider {
-    static var previews: some View {
-        MessageView()
-    }
+#Preview {
+    MessageView()
 }

@@ -5,6 +5,7 @@ import FirebaseDatabase
 import FirebaseDatabaseSwift
 
 struct QuestionView: View {
+    @State private var ref = Database.database().reference()
     
     @State private var sliderValue = 5.0
     @State private var minInput = 1.0
@@ -14,52 +15,45 @@ struct QuestionView: View {
     @State private var textInputValue = ""
     @State private var pickerValue = 2
     @State private var options = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-    
     @State private var audioRecorder: AVAudioRecorder!
     @State private var isRecording = false
     @State private var recordingDuration: TimeInterval = 0.0
     @State private var timer: Timer?
     @State private var audioPlayer: AVAudioPlayer?
-    
     @State private var selectedImage: UIImage?
     @State private var isImagePickerPresented = false
     
     @State private var questionIndex = 0
+    @State private var selectedQuestionType: String = ""
+    @State private var surveyQuestions: [SurveyQuestion] = []
+    @State private var isLoading = true
     
-    var ref = Database.database().reference()
-    
-    @State private var selectedQuestionType: SurveyQuestion.QuestionType
-    
-    init() {
-        _selectedQuestionType = State(initialValue: surveyQuestions.first?.type ?? .imageCapture)
-        readValue()
+    func handleSubmit() {
+        print("Survey Submitted")
     }
-    
-    struct SurveyQuestion {
-        enum QuestionType {
-            case textInput, slider, multipleChoice, recording, imageCapture
-        }
-        
-        let type: QuestionType
-        let prompt: String
-    }
-    
-    let surveyQuestions: [SurveyQuestion] = [
-        SurveyQuestion(type: .textInput, prompt: "Describe your quality of sleep over the past week."),
-        SurveyQuestion(type: .multipleChoice, prompt: "On a scale of 1 to 10, how would you rate your stress level?"),
-        SurveyQuestion(type: .slider, prompt: "On a scale of 1 to 10, how would you rate your sleep?"),
-        SurveyQuestion(type: .recording, prompt: "Record your sleep session"),
-        SurveyQuestion(type: .imageCapture, prompt: "Take a picture of your sleeping environment"),
-    ]
     
     func readValue() {
+        isLoading = true
         ref.child("surveys/1/questions").observeSingleEvent(of: .value, with: { snapshot in
             if let surveyData = snapshot.value as? NSArray {
-                print(surveyData[1])
+                var questions = [SurveyQuestion]()
+                for data in surveyData {
+                    if let questionData = data as? NSDictionary {
+                        if let type = questionData["type"], let prompt = questionData["prompt"] {
+                            let question = SurveyQuestion(type: type as! String, prompt: prompt as! String)
+                            questions.append(question)
+                        }
+                    }
+                }
+                self.surveyQuestions = questions
+                resetInputValues()
+                isLoading = false
             } else {
+                isLoading = false
                 print("Unable to access data or data is not in NSDictionary format.")
             }
         }) { error in
+            isLoading = false
             print(error.localizedDescription)
         }
     }
@@ -139,137 +133,146 @@ struct QuestionView: View {
     
     var body: some View {
         ZStack {
-            Color.black.ignoresSafeArea()
-            VStack {
-                Spacer()
-                Text("Question \(questionIndex + 1)")
-                    .font(.title)
-                    .foregroundColor(.white)
-                    .multilineTextAlignment(.center)
-                    .padding([.leading, .trailing], 20)
-                Spacer()
-                Text(currentQuestion.prompt)
-                    .font(.system(size: 20))
-                    .foregroundColor(.white)
-                    .padding(.top, 10)
-                    .padding([.leading, .trailing], 20)
-                Spacer()
-                switch selectedQuestionType {
-                case .textInput:
-                    TextField("Enter Response Here", text: $textInputValue)
-                        .padding([.leading, .trailing], 20)
+            if isLoading {
+                Color.black.ignoresSafeArea()
+                ProgressView()
+                    .progressViewStyle(CircularProgressViewStyle())
+                    .scaleEffect(2.0)
+            } else {
+                Color.black.ignoresSafeArea()
+                VStack {
+                    Spacer()
+                    Text("Question \(questionIndex + 1)")
+                        .font(.title)
                         .foregroundColor(.white)
+                        .multilineTextAlignment(.center)
+                        .padding([.leading, .trailing], 20)
+                    Spacer()
+                    Text(currentQuestion.prompt)
+                        .font(.system(size: 20))
+                        .foregroundColor(.white)
+                        .padding(.top, 10)
+                        .padding([.leading, .trailing], 20)
+                    Spacer()
+                    switch selectedQuestionType {
+                    case ".textInput":
+                        TextField("", text: $textInputValue, prompt: Text("Enter Response Here")
+                            .foregroundColor(.black.opacity(0.7)))
+                        .padding([.leading, .trailing], 20)
+                        .foregroundColor(.black)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .padding(.horizontal)
                         .multilineTextAlignment(.center)
-                    
-                case .slider:
-                    Text("Slider Value: \(Int(sliderValue))")
-                        .foregroundColor(.white)
-                    Slider(value: $sliderValue, in: minInput...maxInput, step: interval)
-                        .padding([.leading, .trailing], 20)
-                    
-                case .multipleChoice:
-                    Picker(selection: $pickerValue, label: Text("Multiple Choice")) {
-                        ForEach(0 ..< options.count, id: \.self) { index in
-                            Text("\(self.options[index])").foregroundColor(Color.white)
-                        }
-                    }
-                    .pickerStyle(WheelPickerStyle())
-                    
-                case .recording:
-                    VStack {
-                        Text(String(format: "%.1f Seconds", recordingDuration))
-                            .font(.title)
-                            .foregroundColor(.white)
-                            .padding(.top, 10)
-                        HStack {
-                            Spacer()
-                            Button(action: {
-                                if isRecording {
-                                    stopRecording()
-                                } else {
-                                    startRecording()
-                                }
-                            }) {
-                                Image(systemName: isRecording ? "stop.circle.fill" : "circle.fill")
-                                    .font(.system(size: 70))
-                                    .foregroundColor(.red)
-                                    .padding(1)
-                                    .background(Color.white)
-                                    .clipShape(Circle())
-                            }
-                            Button(action: {
-                                playRecording()
-                            }) {
-                                Image(systemName: "play.circle.fill")
-                                    .font(.system(size: 70))
-                                    .foregroundColor(.survaidBlue)
-                                    .padding(1)
-                                    .background(Color.white)
-                                    .clipShape(Circle())
-                            }
-                            Spacer()
-                        }
-                    }
-                    
-                case .imageCapture:
-                    if let selectedImage = selectedImage {
-                        Image(uiImage: selectedImage)
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 300, height: 300)
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
-                    } else {
-                        Button(action: {
-                            isImagePickerPresented.toggle()
-                        }) {
-                            Image(systemName: "camera.circle.fill")
-                                .font(.system(size: 70))
-                                .foregroundColor(.white)
-                                .padding(1)
-                                .background(Color.blue)
-                                .clipShape(Circle())
-                        }
-                        .sheet(isPresented: $isImagePickerPresented, onDismiss: loadImage) {
-                            ImagePicker(selectedImage: $selectedImage)
-                        }
-                    }
-                }
-                Spacer()
-                VStack {
-                    if questionIndex == 0 {
                         
-                    } else {
+                    case ".slider":
+                        Text("Slider Value: \(Int(sliderValue))")
+                            .foregroundColor(.white)
+                        Slider(value: $sliderValue, in: minInput...maxInput, step: interval)
+                            .padding([.leading, .trailing], 20)
+                        
+                    case ".multipleChoice":
+                        Picker(selection: $pickerValue, label: Text("Multiple Choice")) {
+                            ForEach(0 ..< options.count, id: \.self) { index in
+                                Text("\(self.options[index])").foregroundColor(Color.white)
+                            }
+                        }
+                        .pickerStyle(WheelPickerStyle())
+                        
+                    case ".recording":
+                        VStack {
+                            Text(String(format: "%.1f Seconds", recordingDuration))
+                                .font(.title)
+                                .foregroundColor(.white)
+                                .padding(.top, 10)
+                            HStack {
+                                Spacer()
+                                Button(action: {
+                                    if isRecording {
+                                        stopRecording()
+                                    } else {
+                                        startRecording()
+                                    }
+                                }) {
+                                    Image(systemName: isRecording ? "stop.circle.fill" : "circle.fill")
+                                        .font(.system(size: 70))
+                                        .foregroundColor(.red)
+                                        .padding(1)
+                                        .background(Color.white)
+                                        .clipShape(Circle())
+                                }
+                                Button(action: {
+                                    playRecording()
+                                }) {
+                                    Image(systemName: "play.circle.fill")
+                                        .font(.system(size: 70))
+                                        .foregroundColor(.survaidBlue)
+                                        .padding(1)
+                                        .background(Color.white)
+                                        .clipShape(Circle())
+                                }
+                                Spacer()
+                            }
+                        }
+                        
+                    case ".imageCapture":
+                        if let selectedImage = selectedImage {
+                            Image(uiImage: selectedImage)
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 300, height: 300)
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                        } else {
+                            Button(action: {
+                                isImagePickerPresented.toggle()
+                            }) {
+                                Image(systemName: "camera.circle.fill")
+                                    .font(.system(size: 70))
+                                    .foregroundColor(.white)
+                                    .padding(1)
+                                    .background(Color.blue)
+                                    .clipShape(Circle())
+                            }
+                            .sheet(isPresented: $isImagePickerPresented, onDismiss: loadImage) {
+                                ImagePicker(selectedImage: $selectedImage)
+                            }
+                        }
+                    default:
+                        Spacer()
+                    }
+                    Spacer()
+                    VStack {
+                        if questionIndex != 0 {
+                            Button(action: {
+                                previousQuestion()
+                            }) {
+                                Text("Previous Question")
+                                    .padding(20)
+                                    .background(Color.survaidOrange)
+                                    .foregroundColor(.white)
+                                    .cornerRadius(10)
+                                    .padding(0)
+                            }
+                        }
                         Button(action: {
-                            previousQuestion()
+                            if questionIndex == surveyQuestions.count - 1 {
+                                handleSubmit()
+                            } else {
+                                nextQuestion()
+                            }
                         }) {
-                            Text("Previous Question")
+                            Text(questionIndex == surveyQuestions.count - 1 ? "Submit Survey" : "Next Question")
                                 .padding(20)
-                                .background(Color.survaidOrange)
+                                .background(Color.survaidBlue)
                                 .foregroundColor(.white)
                                 .cornerRadius(10)
                                 .padding(0)
                         }
                     }
-                    
-                    Button(action: {
-                        if questionIndex == surveyQuestions.count - 1 {
-                            print("Survey Submitted")
-                        } else {
-                            nextQuestion()
-                        }
-                    }) {
-                        Text(questionIndex == surveyQuestions.count - 1 ? "Submit Survey" : "Next Question")
-                            .padding(20)
-                            .background(Color.survaidBlue)
-                            .foregroundColor(.white)
-                            .cornerRadius(10)
-                            .padding(0)
-                    }
+                    Spacer()
                 }
-                Spacer()
             }
+        }.onAppear {
+            readValue()
         }
     }
     
@@ -277,10 +280,9 @@ struct QuestionView: View {
     }
 }
 
-struct QuestionView_Previews: PreviewProvider {
-    static var previews: some View {
-        QuestionView()
-    }
+struct SurveyQuestion {
+    let type: String
+    let prompt: String
 }
 
 struct ImagePicker: UIViewControllerRepresentable {
@@ -319,4 +321,8 @@ struct ImagePicker: UIViewControllerRepresentable {
     
     func updateUIViewController(_ uiViewController: UIImagePickerController, context: Context) {
     }
+}
+
+#Preview {
+    QuestionView()
 }
