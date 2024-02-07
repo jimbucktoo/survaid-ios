@@ -6,7 +6,7 @@ struct ContentView: View {
     @State private var password = ""
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ZStack {
                 Color.survaidBlue.ignoresSafeArea()
                 Circle().scale(1.7).foregroundColor(.survaidOrange)
