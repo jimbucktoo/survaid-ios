@@ -1,8 +1,18 @@
 import SwiftUI
+import FirebaseAuth
 
 struct SurveysView: View {
+    
+    let user = Auth.auth().currentUser
+    
+    init() {
+        if let user = user {
+            print(user.email ?? "User Not Authenticated")
+        }
+    }
+    
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ScrollView {
                 HStack {
                     Image(systemName: "doc.fill")

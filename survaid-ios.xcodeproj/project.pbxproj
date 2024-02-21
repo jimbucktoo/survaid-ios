@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		C31EEF992ADDEB4C004DA615 /* survaid_iosApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C31EEF982ADDEB4C004DA615 /* survaid_iosApp.swift */; };
-		C31EEF9B2ADDEB4C004DA615 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C31EEF9A2ADDEB4C004DA615 /* ContentView.swift */; };
+		C31EEF9B2ADDEB4C004DA615 /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C31EEF9A2ADDEB4C004DA615 /* SignInView.swift */; };
 		C31EEF9D2ADDEB4D004DA615 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C31EEF9C2ADDEB4D004DA615 /* Assets.xcassets */; };
 		C31EEFA02ADDEB4D004DA615 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C31EEF9F2ADDEB4D004DA615 /* Preview Assets.xcassets */; };
 		C31EEFAA2ADDEB4E004DA615 /* survaid_iosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C31EEFA92ADDEB4E004DA615 /* survaid_iosTests.swift */; };
@@ -29,6 +29,7 @@
 		C38C5AD92B50EAF700DCB829 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = C38C5AD82B50EAF700DCB829 /* FirebaseDatabase */; };
 		C38C5ADB2B50EAF700DCB829 /* FirebaseDatabaseSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C38C5ADA2B50EAF700DCB829 /* FirebaseDatabaseSwift */; };
 		C38C5ADD2B50EAF700DCB829 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = C38C5ADC2B50EAF700DCB829 /* FirebaseStorage */; };
+		C3C7C7A82B8548ED00ECC913 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C7C7A72B8548ED00ECC913 /* SignUpView.swift */; };
 		C3E8A6CB2B3A15F0007D1C66 /* SurveyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3E8A6CA2B3A15F0007D1C66 /* SurveyView.swift */; };
 		C3E8A6CD2B3A4075007D1C66 /* ActiveSurveysView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3E8A6CC2B3A4075007D1C66 /* ActiveSurveysView.swift */; };
 		C3E8A6CF2B3A4335007D1C66 /* ParticipantInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3E8A6CE2B3A4335007D1C66 /* ParticipantInformationView.swift */; };
@@ -58,7 +59,7 @@
 /* Begin PBXFileReference section */
 		C31EEF952ADDEB4C004DA615 /* survaid-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "survaid-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C31EEF982ADDEB4C004DA615 /* survaid_iosApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = survaid_iosApp.swift; sourceTree = "<group>"; };
-		C31EEF9A2ADDEB4C004DA615 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		C31EEF9A2ADDEB4C004DA615 /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
 		C31EEF9C2ADDEB4D004DA615 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C31EEF9F2ADDEB4D004DA615 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		C31EEFA52ADDEB4E004DA615 /* survaid-iosTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "survaid-iosTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -75,6 +76,7 @@
 		C3545E572AF4095C00221106 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		C372810C2B50F15B0091349F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C38C5ACD2B50A09D00DCB829 /* QuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionView.swift; sourceTree = "<group>"; };
+		C3C7C7A72B8548ED00ECC913 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		C3E8A6CA2B3A15F0007D1C66 /* SurveyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyView.swift; sourceTree = "<group>"; };
 		C3E8A6CC2B3A4075007D1C66 /* ActiveSurveysView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveSurveysView.swift; sourceTree = "<group>"; };
 		C3E8A6CE2B3A4335007D1C66 /* ParticipantInformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantInformationView.swift; sourceTree = "<group>"; };
@@ -139,7 +141,8 @@
 			isa = PBXGroup;
 			children = (
 				C31EEF982ADDEB4C004DA615 /* survaid_iosApp.swift */,
-				C31EEF9A2ADDEB4C004DA615 /* ContentView.swift */,
+				C31EEF9A2ADDEB4C004DA615 /* SignInView.swift */,
+				C3C7C7A72B8548ED00ECC913 /* SignUpView.swift */,
 				C31EEFD22ADDF4FD004DA615 /* SurveysView.swift */,
 				C3E8A6CA2B3A15F0007D1C66 /* SurveyView.swift */,
 				C3545E572AF4095C00221106 /* MenuView.swift */,
@@ -343,8 +346,9 @@
 				C3E8A6D32B3A4352007D1C66 /* ReviewsView.swift in Sources */,
 				C3E8A6D72B3CB333007D1C66 /* MessageView.swift in Sources */,
 				C38C5ACE2B50A09D00DCB829 /* QuestionView.swift in Sources */,
-				C31EEF9B2ADDEB4C004DA615 /* ContentView.swift in Sources */,
+				C31EEF9B2ADDEB4C004DA615 /* SignInView.swift in Sources */,
 				C3E8A6CB2B3A15F0007D1C66 /* SurveyView.swift in Sources */,
+				C3C7C7A82B8548ED00ECC913 /* SignUpView.swift in Sources */,
 				C31EEF992ADDEB4C004DA615 /* survaid_iosApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

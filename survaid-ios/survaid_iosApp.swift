@@ -1,5 +1,6 @@
 import SwiftUI
 import FirebaseCore
+import FirebaseAuth
 
 
 class AppDelegate: NSObject, UIApplicationDelegate {
@@ -15,11 +16,10 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 struct YourApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
-    
     var body: some Scene {
         WindowGroup {
             NavigationView {
-                ContentView()
+                SignInView()
             }
         }
     }
