@@ -1,6 +1,6 @@
 # survaid-ios
 
-survaid-ios is a mobile data collection toolkit, including a vast array of question types, advanced notification configurations, and compliance monitoring.
+survaid-ios is part of a web and mobile platform that facilitates real-time mobile sensor data collection from survey participants.
 
 ## Links
 
