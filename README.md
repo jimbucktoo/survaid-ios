@@ -10,17 +10,8 @@ survaid-ios is a mobile data collection toolkit, including a vast array of quest
 
 ## Technologies
 
+* [Firebase](https://firebase.google.com/) - Firebase is a set of backend cloud computing services and application development platforms provided by Google. It hosts databases, services, authentication, and integration for a variety of applications, including Android, iOS, JavaScript, Node.js, Java, Unity, PHP, and C++.
 * [Swift](https://developer.apple.com/swift/) - Swift is a high-level general-purpose, multi-paradigm, compiled programming language developed by Apple Inc. and the open-source community.
-
-## Color Scheme:
-
-Black - #000000
-
-White - #FFFFFF
-
-Blue - #026EFF
-
-Orange - #F15E23
 
 ## Authors
 
