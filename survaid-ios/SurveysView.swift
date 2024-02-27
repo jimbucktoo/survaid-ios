@@ -29,13 +29,20 @@ struct SurveysView: View {
                                 VStack {
                                     HStack {
                                         Image(systemName: "doc.fill").foregroundColor(.survaidBlue).padding(.leading, 10).padding(.bottom, 10)
-                                        Text("\(survey.title)").foregroundColor(.survaidBlue).fontWeight(.bold).padding(.bottom, 10)
+                                        Text("\(survey.title)").foregroundColor(.survaidBlue)
+                                            .fontWeight(.bold)
+                                            .lineLimit(1)
+                                            .truncationMode(.tail)
+                                            .padding(.bottom, 10)
                                         Spacer()
-                                        Text("\(timeDifference) min ago").foregroundColor(.survaidOrange).fontWeight(.bold).padding(.trailing, 10).padding(.bottom, 10)
+                                        Text("\(timeDifference)").foregroundColor(.survaidOrange).fontWeight(.bold).padding(.trailing, 10).padding(.bottom, 10)
                                     }
                                     HStack {
                                         Image(systemName: "person.fill").foregroundColor(.black).padding(.leading, 10).padding(.bottom, 10)
-                                        Text("\(survey.email)").foregroundColor(.black).padding(.bottom, 10)
+                                        Text("\(survey.email)").foregroundColor(.black)
+                                            .lineLimit(1)
+                                            .truncationMode(.tail)
+                                            .padding(.bottom, 10)
                                         Spacer()
                                         Text("Price: $\(survey.price)").foregroundColor(.black).padding(.trailing, 10).padding(.bottom, 10)
                                     }
@@ -64,10 +71,6 @@ struct SurveysView: View {
     }
 }
 
-#Preview {
-    SurveysView()
-}
-
 struct Survey {
     let id: String
     let createdBy: String
@@ -82,13 +85,6 @@ class SurveysViewModel: ObservableObject {
     @Published var surveysData: [Survey] = []
     
     private var ref = Database.database().reference()
-    private let user = Auth.auth().currentUser
-    
-    init() {
-        if let user = user {
-            print(user.email ?? "User Not Authenticated")
-        }
-    }
     
     func loadSurveys() {
         surveysData = []
@@ -125,9 +121,27 @@ class SurveysViewModel: ObservableObject {
         }
     }
     
-    func calculateTimeDifference(for timestamp: TimeInterval) -> Int {
+    func calculateTimeDifference(for timestamp: TimeInterval) -> String {
         let currentTime = Date().timeIntervalSince1970 * 1000
-        let timeDifference = (Int(currentTime - timestamp) / 60000)
-        return timeDifference
+        let timeDifferenceMinutes = Int(currentTime - timestamp) / 60000
+        
+        if timeDifferenceMinutes < 60 {
+            return "\(timeDifferenceMinutes) m"
+        } else if timeDifferenceMinutes < 1440 {
+            let hours = timeDifferenceMinutes / 60
+            let remainingMinutes = timeDifferenceMinutes % 60
+            if remainingMinutes == 0 {
+                return "\(hours) hr"
+            } else {
+                return "\(hours) hr \(remainingMinutes) m"
+            }
+        } else {
+            let days = timeDifferenceMinutes / 1440
+            return "\(days) d"
+        }
     }
+}
+
+#Preview {
+    SurveysView()
 }

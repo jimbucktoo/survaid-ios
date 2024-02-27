@@ -43,27 +43,27 @@ struct SignUpView: View {
                               text: $firstName,
                               prompt: Text("First Name")
                         .foregroundColor(.black)
-                    ).frame(width: 300, height: 50, alignment: .center).background(Color.white).cornerRadius(10).multilineTextAlignment(.center)
+                    ).frame(width: 300, height: 50, alignment: .center).background(Color.white).cornerRadius(10).multilineTextAlignment(.center).foregroundColor(.black)
                     TextField("",
                               text: $lastName,
                               prompt: Text("Last Name")
                         .foregroundColor(.black)
-                    ).frame(width: 300, height: 50, alignment: .center).background(Color.white).cornerRadius(10).multilineTextAlignment(.center)
+                    ).frame(width: 300, height: 50, alignment: .center).background(Color.white).cornerRadius(10).multilineTextAlignment(.center).foregroundColor(.black)
                     TextField("",
                               text: $email,
                               prompt: Text("Email")
                         .foregroundColor(.black)
-                    ).frame(width: 300, height: 50, alignment: .center).background(Color.white).cornerRadius(10).multilineTextAlignment(.center)
+                    ).frame(width: 300, height: 50, alignment: .center).background(Color.white).cornerRadius(10).multilineTextAlignment(.center).foregroundColor(.black)
                     SecureField("",
                                 text: $password,
                                 prompt: Text("Password")
                         .foregroundColor(.black)
-                    ).frame(width: 300, height: 50, alignment: .center).background(Color.white).cornerRadius(10).multilineTextAlignment(.center)
+                    ).frame(width: 300, height: 50, alignment: .center).background(Color.white).cornerRadius(10).multilineTextAlignment(.center).foregroundColor(.black)
                     Button("Sign Up") {
                         signUpUser()
                     }
                     .foregroundColor(.white).frame(width: 300, height: 50).background(Color.blue).cornerRadius(10)
-                }
+                }.padding(.bottom, 40)
             }
         }
     }
