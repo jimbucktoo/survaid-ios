@@ -1,5 +1,4 @@
 import SwiftUI
-import FirebaseAuth
 import FirebaseDatabase
 import FirebaseDatabaseSwift
 

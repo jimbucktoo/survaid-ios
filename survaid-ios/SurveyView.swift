@@ -1,17 +1,9 @@
 import SwiftUI
-import FirebaseAuth
 import FirebaseDatabase
 import FirebaseDatabaseSwift
 
 struct SurveyView: View {
     private var ref = Database.database().reference()
-    private let user = Auth.auth().currentUser
-    
-    init() {
-        if let user = user {
-            print(user.email ?? "User Not Authenticated")
-        }
-    }
     
     func loadSurvey() {
         print("Working")
