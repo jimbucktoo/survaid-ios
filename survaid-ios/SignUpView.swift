@@ -1,18 +1,28 @@
 import SwiftUI
 import FirebaseAuth
+import FirebaseDatabase
+import FirebaseDatabaseSwift
 
 struct SignUpView: View {
+    @State private var ref = Database.database().reference()
     
     @State private var firstName = ""
     @State private var lastName = ""
     @State private var email = ""
     @State private var password = ""
     @State private var signUpSuccess = false
+    @State private var userUID: String = ""
     
     func signUpUser() {
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
-            print(authResult ?? "No Result")
-            signUpSuccess = true
+            if let authResult = authResult {
+                userUID = authResult.user.uid
+                print("User UID: \(userUID)")
+                ref.child("users").child(userUID).setValue(["email": email, "firstName": firstName, "lastName": lastName, "role": "Participant"])
+                signUpSuccess = true
+            } else if let error = error {
+                print("Error creating user: \(error.localizedDescription)")
+            }
         }
     }
     
