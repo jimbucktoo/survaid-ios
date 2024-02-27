@@ -91,6 +91,7 @@ class SurveysViewModel: ObservableObject {
     }
     
     func loadSurveys() {
+        surveysData = []
         ref.child("surveys").observeSingleEvent(of: .value, with: { snapshot in
             if let surveys = snapshot.value as? [String: Any] {
                 for (key, value) in surveys {

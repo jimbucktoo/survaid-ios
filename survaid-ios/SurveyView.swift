@@ -5,9 +5,7 @@ struct SurveyView: View {
         ScrollView {
             VStack {
                 VStack {
-                    NavigationLink(destination: QuestionView()) {
-                        Image("Sleep").resizable().aspectRatio(contentMode: .fit)
-                    }
+                    Image("Sleep").resizable().aspectRatio(contentMode: .fit)
                     VStack {
                         Text("Status: Active")
                             .foregroundColor(.white)
@@ -16,7 +14,8 @@ struct SurveyView: View {
                     .frame(maxWidth: .infinity)
                     .background(Color.survaidBlue)
                     .edgesIgnoringSafeArea(.all)
-                    Button("Request to Participate") {
+                    NavigationLink(destination: QuestionView()) {
+                        Text("Request to Participate")
                     }
                     .padding(20)
                     .background(Color.survaidBlue)
