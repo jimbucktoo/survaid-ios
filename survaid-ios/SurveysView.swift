@@ -23,6 +23,7 @@ struct SurveysView: View {
                 .padding(.horizontal, 20)
                 LazyVStack {
                     ForEach(viewModel.surveysData, id: \.id) { survey in
+                        let timeDifference = viewModel.calculateTimeDifference(for: survey.createdAt)
                         HStack {
                             NavigationLink(destination: SurveyView(), label: {
                                 VStack {
@@ -30,7 +31,7 @@ struct SurveysView: View {
                                         Image(systemName: "doc.fill").foregroundColor(.survaidBlue).padding(.leading, 10).padding(.bottom, 10)
                                         Text("\(survey.title)").foregroundColor(.survaidBlue).fontWeight(.bold).padding(.bottom, 10)
                                         Spacer()
-                                        Text("1 min").foregroundColor(.survaidOrange).fontWeight(.bold).padding(.trailing, 10).padding(.bottom, 10)
+                                        Text("\(timeDifference) min ago").foregroundColor(.survaidOrange).fontWeight(.bold).padding(.trailing, 10).padding(.bottom, 10)
                                     }
                                     HStack {
                                         Image(systemName: "person.fill").foregroundColor(.black).padding(.leading, 10).padding(.bottom, 10)
@@ -74,6 +75,7 @@ struct Survey {
     let price: String
     let title: String
     let email: String
+    let createdAt: TimeInterval
 }
 
 class SurveysViewModel: ObservableObject {
@@ -97,14 +99,16 @@ class SurveysViewModel: ObservableObject {
                         let description = surveyData["description"] as? String ?? ""
                         let price = surveyData["price"] as? String ?? ""
                         let title = surveyData["title"] as? String ?? ""
+                        let timestamp = surveyData["createdAt"] as? TimeInterval ?? 0
                         
                         self.ref.child("users").observeSingleEvent(of: .value, with: { userSnapshot in
                             if let users = userSnapshot.value as? [String: Any] {
                                 for (userId, userData) in users {
                                     if let userDataDict = userData as? [String: Any], userId == createdBy {
                                         let email = userDataDict["email"] as? String ?? ""
-                                        let survey = Survey(id: key, createdBy: createdBy, description: description, price: price, title: title, email: email)
+                                        let survey = Survey(id: key, createdBy: createdBy, description: description, price: price, title: title, email: email, createdAt: timestamp)
                                         self.surveysData.append(survey)
+                                        self.surveysData.sort { $0.createdAt > $1.createdAt }
                                         break
                                     }
                                 }
@@ -118,5 +122,11 @@ class SurveysViewModel: ObservableObject {
         }) { error in
             print(error.localizedDescription)
         }
+    }
+    
+    func calculateTimeDifference(for timestamp: TimeInterval) -> Int {
+        let currentTime = Date().timeIntervalSince1970 * 1000
+        let timeDifference = (Int(currentTime - timestamp) / 60000)
+        return timeDifference
     }
 }
