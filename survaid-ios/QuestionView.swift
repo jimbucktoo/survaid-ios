@@ -34,30 +34,26 @@ struct QuestionView: View {
     
     func readValue() {
         isLoading = true
-        /*
-         ref.child("surveys/1/questions").observeSingleEvent(of: .value, with: { snapshot in
-         if let surveyData = snapshot.value as? NSArray {
-         var questions = [SurveyQuestion]()
-         for data in surveyData {
-         if let questionData = data as? NSDictionary {
-         if let type = questionData["type"], let prompt = questionData["prompt"] {
-         let question = SurveyQuestion(type: type as! String, prompt: prompt as! String)
-         questions.append(question)
-         }
-         }
-         }
-         self.surveyQuestions = questions
-         resetInputValues()
-         isLoading = false
-         } else {
-         isLoading = false
-         print("Unable to access data or data is not in NSDictionary format.")
-         }
-         }) { error in
-         isLoading = false
-         print(error.localizedDescription)
-         }
-         */
+        ref.child("surveys/surveyId/questions").observeSingleEvent(of: .value, with: { snapshot in
+            if let surveyData = snapshot.value as? NSArray {
+                var questions = [SurveyQuestion]()
+                for data in surveyData {
+                    if let questionData = data as? NSDictionary {
+                        if let type = questionData["type"], let prompt = questionData["prompt"] {
+                            let question = SurveyQuestion(type: type as! String, prompt: prompt as! String)
+                            questions.append(question)
+                        }
+                    }
+                }
+                self.surveyQuestions = questions
+                resetInputValues()
+                isLoading = false
+            } else {
+                print("Unable to access data or data is not in NSDictionary format.")
+            }
+        }) { error in
+            print(error.localizedDescription)
+        }
     }
     
     var currentQuestion: SurveyQuestion {
