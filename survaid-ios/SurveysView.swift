@@ -1,4 +1,5 @@
 import SwiftUI
+import FirebaseAuth
 import FirebaseDatabase
 import FirebaseDatabaseSwift
 
@@ -24,7 +25,7 @@ struct SurveysView: View {
                     ForEach(viewModel.surveysData, id: \.id) { survey in
                         let timeDifference = viewModel.calculateTimeDifference(for: survey.createdAt)
                         HStack {
-                            NavigationLink(destination: SurveyView(), label: {
+                            NavigationLink(destination: SurveyView(surveyId: survey.id), label: {
                                 VStack {
                                     HStack {
                                         Image(systemName: "doc.fill").foregroundColor(.survaidBlue).padding(.leading, 10).padding(.bottom, 10)
@@ -95,23 +96,12 @@ class SurveysViewModel: ObservableObject {
                         let description = surveyData["description"] as? String ?? ""
                         let price = surveyData["price"] as? String ?? ""
                         let title = surveyData["title"] as? String ?? ""
+                        let email = surveyData["createdByEmail"] as? String ?? ""
                         let timestamp = surveyData["createdAt"] as? TimeInterval ?? 0
                         
-                        self.ref.child("users").observeSingleEvent(of: .value, with: { userSnapshot in
-                            if let users = userSnapshot.value as? [String: Any] {
-                                for (userId, userData) in users {
-                                    if let userDataDict = userData as? [String: Any], userId == createdBy {
-                                        let email = userDataDict["email"] as? String ?? ""
-                                        let survey = Survey(id: key, createdBy: createdBy, description: description, price: price, title: title, email: email, createdAt: timestamp)
-                                        self.surveysData.append(survey)
-                                        self.surveysData.sort { $0.createdAt > $1.createdAt }
-                                        break
-                                    }
-                                }
-                            }
-                        }) { error in
-                            print(error.localizedDescription)
-                        }
+                        let survey = Survey(id: key, createdBy: createdBy, description: description, price: price, title: title, email: email, createdAt: timestamp)
+                        self.surveysData.append(survey)
+                        self.surveysData.sort { $0.createdAt > $1.createdAt }
                     }
                 }
             }

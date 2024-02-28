@@ -4,69 +4,77 @@ import FirebaseDatabaseSwift
 
 struct SurveyView: View {
     private var ref = Database.database().reference()
+    let surveyId: String?
+    @State private var surveyData: [String: Any]?
+    
+    init(surveyId: String? = nil) {
+        self.surveyId = surveyId
+    }
     
     func loadSurvey() {
-        print("Working")
+        ref.child("surveys/\(surveyId ?? "")" ).observeSingleEvent(of: .value, with: { snapshot in
+            if let survey = snapshot.value as? [String: Any] {
+                self.surveyData = survey
+            }
+        })
     }
     
     var body: some View {
         ScrollView {
             VStack {
-                VStack {
-                    Image("Sleep").resizable().aspectRatio(contentMode: .fit)
+                if let survey = surveyData {
                     VStack {
-                        Text("Status: Active")
-                            .foregroundColor(.white)
-                    }
-                    .frame(height: 40)
-                    .frame(maxWidth: .infinity)
-                    .background(Color.survaidBlue)
-                    .edgesIgnoringSafeArea(.all)
-                    NavigationLink(destination: QuestionView()) {
-                        Text("Request to Participate")
-                    }
-                    .padding(20)
-                    .background(Color.survaidBlue)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
-                    .padding()
-                    HStack {
-                        Image(systemName: "person.fill").foregroundColor(.black).padding(.leading, 10).padding(.top, 10).padding(.bottom, 10)
-                        Text("jimbucktoo").foregroundColor(.black).padding(.top, 10)
-                        Spacer()
-                        Text("Price: $1.99").foregroundColor(.black).padding(.trailing, 10).padding(.top, 10)
-                    }
-                    HStack {
-                        Image(systemName: "person.2.fill").foregroundColor(.black).padding(.leading, 10).padding(.top, 10)
-                        Text("10 Comments").foregroundColor(.black).padding(.top, 10)
-                        Spacer()
-                        Text("10 Participants").foregroundColor(.black).padding(.trailing, 10).padding(.top, 10)
-                    }
-                    VStack {
+                        Image("Sleep").resizable().aspectRatio(contentMode: .fit)
+                        NavigationLink(destination: QuestionView()) {
+                            Text("Begin Survey")
+                        }
+                        .padding(20)
+                        .background(Color.survaidBlue)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                        .padding()
                         HStack {
-                            Text("Sleep Apnea Survey")
-                                .fontWeight(.bold)
-                                .foregroundColor(.black)
-                                .padding(.leading, 10)
-                                .padding(.top, 10)
+                            Image(systemName: "person.fill").foregroundColor(.black).padding(.leading, 10).padding(.top, 10).padding(.bottom, 10)
+                            Text(survey["createdByEmail"] as? String ?? "").foregroundColor(.black).padding(.top, 10)
                             Spacer()
+                            Text("Price: $\(survey["price"] as? String ?? "")").foregroundColor(.black).padding(.trailing, 10).padding(.top, 10)
+                        }
+                        HStack {
+                            Image(systemName: "text.bubble.fill").foregroundColor(.black).padding(.leading, 10).padding(.top, 10)
+                            Text("Comments").foregroundColor(.black).padding(.top, 10)
+                            Spacer()
+                            Image(systemName: "person.2.fill").foregroundColor(.black).padding(.leading, 10).padding(.top, 10)
+                            Text("Participants").foregroundColor(.black).padding(.trailing, 10).padding(.top, 10)
                         }
                         VStack {
-                            Text("This survey aims to analyze and detect abnormalities in sleep patterns using microphone input. The survey involves utilizing your device's microphone to record ambient sounds while you sleep. The collected audio will be securely processed and analyzed by our advanced algorithms designed to identify potential indicators of sleep apnea, such as irregular breathing patterns, snoring, or pauses in breathing during sleep. To participate, please ensure a quiet sleeping environment and place your device (with a fully charged battery) at a reasonable distance from where you sleep. The survey will require you to enable microphone access and start the recording before falling asleep. Upon waking up, you can end the recording and submit the data for analysis.")
-                                .foregroundColor(.black)
-                                .padding(.leading, 10)
-                                .padding(.top, 2)
+                            HStack {
+                                Text(survey["title"] as? String ?? "")
+                                    .fontWeight(.bold)
+                                    .foregroundColor(.black)
+                                    .padding(.leading, 10)
+                                    .padding(.top, 10)
+                                Spacer()
+                            }
+                            HStack {
+                                Text(survey["description"] as? String ?? "")
+                                    .foregroundColor(.black)
+                                    .padding(.leading, 10)
+                                    .padding(.top, 2)
+                                Spacer()
+                            }.frame(maxHeight: .infinity, alignment: .leading)
                             Spacer()
-                        }.frame(maxWidth: .infinity, alignment: .top)
+                        }
                     }
+                    .frame(maxHeight: .infinity).overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(Color.black, lineWidth: 2)).background(Color.white)
+                } else {
+                    ProgressView()
                 }
-                .frame(maxHeight: .infinity).overlay(
-                    RoundedRectangle(cornerRadius: 10)
-                        .stroke(Color.black, lineWidth: 2)).background(Color.white)
             }.background(Color.black).cornerRadius(10)
         }
         .background(Color.black)
-        .navigationTitle("Sleep Apnea Survey")
+        .navigationTitle(surveyData?["title"] as? String ?? "")
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarColor(.black)
         .onAppear{
@@ -104,5 +112,5 @@ struct NavigationBarColorModifier: ViewModifier {
 }
 
 #Preview {
-    SurveyView()
+    SurveyView(surveyId: "-Nrlj4VdkiDKogzKyEf2")
 }
