@@ -29,6 +29,8 @@ struct QuestionView: View {
     @State private var surveyQuestions: [SurveyQuestion] = []
     @State private var isLoading = true
     
+    @State private var textInput = ""
+    
     init(surveyId: String? = nil) {
         self.surveyId = surveyId
     }
@@ -159,13 +161,11 @@ struct QuestionView: View {
                     Spacer()
                     switch selectedQuestionType {
                     case "Text":
-                        TextField("", text: $textInputValue, prompt: Text("Enter Response Here")
-                            .foregroundColor(.black.opacity(0.7)))
-                        .padding([.leading, .trailing], 20)
-                        .foregroundColor(.black)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .padding(.horizontal)
-                        .multilineTextAlignment(.center)
+                        TextField("",
+                                  text: $textInput,
+                                  prompt: Text("Write a Response...")
+                            .foregroundColor(.black)
+                        ).frame(width: 300, height: 50, alignment: .center).background(Color.white).cornerRadius(10).multilineTextAlignment(.center).foregroundColor(.black)
                         
                     case "Slider":
                         Text("Slider Value: \(Int(sliderValue))")
