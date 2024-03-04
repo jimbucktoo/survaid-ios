@@ -8,12 +8,12 @@ struct QuestionView: View {
     @State private var ref = Database.database().reference()
     let surveyId: String?
     
+    @State private var textValue = ""
     @State private var sliderValue = 5.0
     @State private var minInput = 1.0
     @State private var maxInput = 10.0
     @State private var interval = 1.0
     @State private var selectedRadio = 0
-    @State private var textInputValue = ""
     @State private var pickerValue = 2
     @State private var options = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     @State private var audioRecorder: AVAudioRecorder!
@@ -29,14 +29,15 @@ struct QuestionView: View {
     @State private var surveyQuestions: [SurveyQuestion] = []
     @State private var isLoading = true
     
-    @State private var textInput = ""
-    
     init(surveyId: String? = nil) {
         self.surveyId = surveyId
     }
     
     func handleSubmit() {
         print("Survey Submitted")
+        print("Text: \(textValue)")
+        print("Slider: \(sliderValue)")
+        print("Multiple Choice: \(pickerValue)")
     }
     
     func readValue() {
@@ -162,7 +163,7 @@ struct QuestionView: View {
                     switch selectedQuestionType {
                     case "Text":
                         TextField("",
-                                  text: $textInput,
+                                  text: $textValue,
                                   prompt: Text("Write a Response...")
                             .foregroundColor(.black)
                         ).frame(width: 300, height: 50, alignment: .center).background(Color.white).cornerRadius(10).multilineTextAlignment(.center).foregroundColor(.black)
@@ -175,8 +176,8 @@ struct QuestionView: View {
                         
                     case "Multiple Choice":
                         Picker(selection: $pickerValue, label: Text("Multiple Choice")) {
-                            ForEach(0 ..< options.count, id: \.self) { index in
-                                Text("\(self.options[index])").foregroundColor(Color.white)
+                            ForEach(options, id: \.self) { option in
+                                Text("\(option)").foregroundColor(Color.white)
                             }
                         }
                         .pickerStyle(WheelPickerStyle())
