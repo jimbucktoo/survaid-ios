@@ -47,8 +47,8 @@ struct QuestionView: View {
                 var questions = [SurveyQuestion]()
                 for data in surveyData {
                     if let questionData = data as? NSDictionary {
-                        if let title = questionData["title"], let type = questionData["type"] {
-                            let question = SurveyQuestion(title: title as! String, type: type as! String)
+                        if let title = questionData["title"], let description = questionData["description"], let type = questionData["type"] {
+                            let question = SurveyQuestion(title: title as! String, description: description as! String, type: type as! String)
                             questions.append(question)
                         }
                     }
@@ -57,7 +57,7 @@ struct QuestionView: View {
                 resetInputValues()
                 isLoading = false
             } else {
-                print("Unable to access data or data is not in NSDictionary format.")
+                print("Unable to access data or data is not in NSArray or NSDictionary format.")
             }
         }) { error in
             print(error.localizedDescription)
@@ -148,13 +148,12 @@ struct QuestionView: View {
                 Color.black.ignoresSafeArea()
                 VStack {
                     Spacer()
-                    Text("Question \(questionIndex + 1)")
+                    Text(currentQuestion.title)
                         .font(.title)
                         .foregroundColor(.white)
                         .multilineTextAlignment(.center)
                         .padding([.leading, .trailing], 20)
-                    Spacer()
-                    Text(currentQuestion.title)
+                    Text(currentQuestion.description)
                         .font(.system(size: 20))
                         .foregroundColor(.white)
                         .padding(.top, 10)
@@ -286,6 +285,7 @@ struct QuestionView: View {
 
 struct SurveyQuestion {
     let title: String
+    let description: String
     let type: String
 }
 
