@@ -6,6 +6,7 @@ import FirebaseDatabaseSwift
 
 struct QuestionView: View {
     @State private var ref = Database.database().reference()
+    let surveyId: String?
     
     @State private var sliderValue = 5.0
     @State private var minInput = 1.0
@@ -28,19 +29,23 @@ struct QuestionView: View {
     @State private var surveyQuestions: [SurveyQuestion] = []
     @State private var isLoading = true
     
+    init(surveyId: String? = nil) {
+        self.surveyId = surveyId
+    }
+    
     func handleSubmit() {
         print("Survey Submitted")
     }
     
     func readValue() {
         isLoading = true
-        ref.child("surveys/surveyId/questions").observeSingleEvent(of: .value, with: { snapshot in
+        ref.child("surveys/\(surveyId ?? "")/questions").observeSingleEvent(of: .value, with: { snapshot in
             if let surveyData = snapshot.value as? NSArray {
                 var questions = [SurveyQuestion]()
                 for data in surveyData {
                     if let questionData = data as? NSDictionary {
-                        if let type = questionData["type"], let prompt = questionData["prompt"] {
-                            let question = SurveyQuestion(type: type as! String, prompt: prompt as! String)
+                        if let title = questionData["title"], let type = questionData["type"] {
+                            let question = SurveyQuestion(title: title as! String, type: type as! String)
                             questions.append(question)
                         }
                     }
@@ -146,14 +151,14 @@ struct QuestionView: View {
                         .multilineTextAlignment(.center)
                         .padding([.leading, .trailing], 20)
                     Spacer()
-                    Text(currentQuestion.prompt)
+                    Text(currentQuestion.title)
                         .font(.system(size: 20))
                         .foregroundColor(.white)
                         .padding(.top, 10)
                         .padding([.leading, .trailing], 20)
                     Spacer()
                     switch selectedQuestionType {
-                    case ".textInput":
+                    case "Text":
                         TextField("", text: $textInputValue, prompt: Text("Enter Response Here")
                             .foregroundColor(.black.opacity(0.7)))
                         .padding([.leading, .trailing], 20)
@@ -162,13 +167,13 @@ struct QuestionView: View {
                         .padding(.horizontal)
                         .multilineTextAlignment(.center)
                         
-                    case ".slider":
+                    case "Slider":
                         Text("Slider Value: \(Int(sliderValue))")
                             .foregroundColor(.white)
                         Slider(value: $sliderValue, in: minInput...maxInput, step: interval)
                             .padding([.leading, .trailing], 20)
                         
-                    case ".multipleChoice":
+                    case "Multiple Choice":
                         Picker(selection: $pickerValue, label: Text("Multiple Choice")) {
                             ForEach(0 ..< options.count, id: \.self) { index in
                                 Text("\(self.options[index])").foregroundColor(Color.white)
@@ -176,7 +181,7 @@ struct QuestionView: View {
                         }
                         .pickerStyle(WheelPickerStyle())
                         
-                    case ".recording":
+                    case "Microphone":
                         VStack {
                             Text(String(format: "%.1f Seconds", recordingDuration))
                                 .font(.title)
@@ -212,7 +217,7 @@ struct QuestionView: View {
                             }
                         }
                         
-                    case ".imageCapture":
+                    case "Camera":
                         if let selectedImage = selectedImage {
                             Image(uiImage: selectedImage)
                                 .resizable()
@@ -279,8 +284,8 @@ struct QuestionView: View {
 }
 
 struct SurveyQuestion {
+    let title: String
     let type: String
-    let prompt: String
 }
 
 struct ImagePicker: UIViewControllerRepresentable {
@@ -322,5 +327,5 @@ struct ImagePicker: UIViewControllerRepresentable {
 }
 
 #Preview {
-    QuestionView()
+    QuestionView(surveyId: "-Ns9w_goMjBxDTTWnINg")
 }

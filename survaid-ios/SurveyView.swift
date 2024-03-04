@@ -25,7 +25,7 @@ struct SurveyView: View {
                 if let survey = surveyData {
                     VStack {
                         Image("Sleep").resizable().aspectRatio(contentMode: .fit)
-                        NavigationLink(destination: QuestionView()) {
+                        NavigationLink(destination: QuestionView(surveyId: surveyId)) {
                             Text("Begin Survey")
                         }
                         .padding(20)
@@ -112,5 +112,5 @@ struct NavigationBarColorModifier: ViewModifier {
 }
 
 #Preview {
-    SurveyView(surveyId: "-Nrlj4VdkiDKogzKyEf2")
+    SurveyView(surveyId: "-Ns9w_goMjBxDTTWnINg")
 }
