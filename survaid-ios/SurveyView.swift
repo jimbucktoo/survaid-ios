@@ -6,6 +6,7 @@ struct SurveyView: View {
     private var ref = Database.database().reference()
     let surveyId: String?
     @State private var surveyData: [String: Any]?
+    @State private var blackImage: String = "https://firebasestorage.googleapis.com/v0/b/survaidapp-583db.appspot.com/o/black.jpg?alt=media&token=465f411a-ff69-4577-bd37-f1f539f39003"
     
     init(surveyId: String? = nil) {
         self.surveyId = surveyId
@@ -24,7 +25,24 @@ struct SurveyView: View {
             VStack {
                 if let survey = surveyData {
                     VStack {
-                        Image("Sleep").resizable().aspectRatio(contentMode: .fit)
+                        ZStack {
+                            Color.black
+                            AsyncImage(url: URL(string: "\(survey["surveyImage"] as? String ?? "\(blackImage)")")) { phase in
+                                switch phase {
+                                case .empty:
+                                    ProgressView()
+                                case .success(let image):
+                                    image
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fill)
+                                case .failure(let error):
+                                    Text("Failed to load image: \(error.localizedDescription)")
+                                @unknown default:
+                                    EmptyView()
+                                }
+                            }
+                        }
+                        .frame(maxWidth: .infinity, maxHeight: 320)
                         NavigationLink(destination: QuestionView(surveyId: surveyId)) {
                             Text("Begin Survey")
                         }
@@ -112,5 +130,5 @@ struct NavigationBarColorModifier: ViewModifier {
 }
 
 #Preview {
-    SurveyView(surveyId: "-Ns9w_goMjBxDTTWnINg")
+    SurveyView(surveyId: "-NsFRRs4f6D41Wca9wkn")
 }

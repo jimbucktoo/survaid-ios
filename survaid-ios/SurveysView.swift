@@ -2,6 +2,7 @@ import SwiftUI
 import FirebaseAuth
 import FirebaseDatabase
 import FirebaseDatabaseSwift
+import FirebaseStorage
 
 struct SurveysView: View {
     @StateObject private var viewModel = SurveysViewModel()
@@ -36,7 +37,7 @@ struct SurveysView: View {
                                             .padding(.bottom, 10)
                                         Spacer()
                                         Text("\(timeDifference)").foregroundColor(.survaidOrange).fontWeight(.bold).padding(.trailing, 10).padding(.bottom, 10)
-                                    }
+                                    }.padding(.top, 20)
                                     HStack {
                                         Image(systemName: "person.fill").foregroundColor(.black).padding(.leading, 10).padding(.bottom, 10)
                                         Text("\(survey.email)").foregroundColor(.black)
@@ -46,14 +47,31 @@ struct SurveysView: View {
                                         Spacer()
                                         Text("Price: $\(survey.price)").foregroundColor(.black).padding(.trailing, 10).padding(.bottom, 10)
                                     }
-                                    Image("Sleep").resizable().aspectRatio(contentMode: .fit)
+                                    ZStack {
+                                        Color.black
+                                        AsyncImage(url: URL(string: "\(survey.surveyImage)")) { phase in
+                                            switch phase {
+                                            case .empty:
+                                                ProgressView()
+                                            case .success(let image):
+                                                image
+                                                    .resizable()
+                                                    .aspectRatio(contentMode: .fill)
+                                            case .failure(let error):
+                                                Text("Failed to load image: \(error.localizedDescription)")
+                                            @unknown default:
+                                                EmptyView()
+                                            }
+                                        }
+                                    }
+                                    .frame(maxWidth: .infinity, maxHeight: 320)
                                     HStack {
                                         Image(systemName: "text.bubble.fill").foregroundColor(.black).padding(.leading, 10).padding(.top, 10)
                                         Text("Comments").foregroundColor(.black).padding(.top, 10)
                                         Spacer()
                                         Image(systemName: "person.2.fill").foregroundColor(.black).padding(.leading, 10).padding(.top, 10)
                                         Text("Participants").foregroundColor(.black).padding(.trailing, 10).padding(.top, 10)
-                                    }
+                                    }.padding(.bottom, 20)
                                 }
                                 .frame(height: 300).overlay(
                                     RoundedRectangle(cornerRadius: 10)
@@ -79,12 +97,14 @@ struct Survey {
     let title: String
     let email: String
     let createdAt: TimeInterval
+    let surveyImage: String
 }
 
 class SurveysViewModel: ObservableObject {
     @Published var surveysData: [Survey] = []
     
     private var ref = Database.database().reference()
+    private var storageRef = Storage.storage().reference()
     
     func loadSurveys() {
         surveysData = []
@@ -98,8 +118,8 @@ class SurveysViewModel: ObservableObject {
                         let title = surveyData["title"] as? String ?? ""
                         let email = surveyData["createdByEmail"] as? String ?? ""
                         let timestamp = surveyData["createdAt"] as? TimeInterval ?? 0
-                        
-                        let survey = Survey(id: key, createdBy: createdBy, description: description, price: price, title: title, email: email, createdAt: timestamp)
+                        let image = surveyData["surveyImage"] as? String ?? ""
+                        let survey = Survey(id: key, createdBy: createdBy, description: description, price: price, title: title, email: email, createdAt: timestamp, surveyImage: image)
                         self.surveysData.append(survey)
                         self.surveysData.sort { $0.createdAt > $1.createdAt }
                     }
