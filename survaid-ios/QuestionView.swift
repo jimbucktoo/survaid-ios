@@ -3,9 +3,11 @@ import AVFoundation
 import UIKit
 import FirebaseDatabase
 import FirebaseDatabaseSwift
+import FirebaseStorage
 
 struct QuestionView: View {
     @State private var ref = Database.database().reference()
+    private var storageRef = Storage.storage().reference()
     let surveyId: String?
     
     @State private var textValue = ""
@@ -21,6 +23,7 @@ struct QuestionView: View {
     @State private var recordingDuration: TimeInterval = 0.0
     @State private var timer: Timer?
     @State private var audioPlayer: AVAudioPlayer?
+    @State private var audioURL: URL?
     @State private var selectedImage: UIImage?
     @State private var isImagePickerPresented = false
     
@@ -33,11 +36,50 @@ struct QuestionView: View {
         self.surveyId = surveyId
     }
     
+    func uploadImage(image: UIImage) {
+        guard let imageData = image.jpegData(compressionQuality: 0.5) else {
+            print("Failed to convert image to data")
+            return
+        }
+        
+        let imageName = "\(Date().timeIntervalSince1970).jpg"
+        let imageRef = storageRef.child("images/data/\(surveyId ?? "")/\(imageName)")
+        
+        _ = imageRef.putData(imageData, metadata: nil) { metadata, error in
+            guard let _ = metadata else {
+                print("Error uploading image: \(error?.localizedDescription ?? "Unknown error")")
+                return
+            }
+            
+            print("Image uploaded successfully")
+        }
+    }
+    
+    func uploadRecording() {
+        let recordingRef = storageRef.child("audio/data/\(Date().timeIntervalSince1970).m4a")
+        
+        _ = recordingRef.putFile(from: audioURL!, metadata: nil) { error in
+            recordingRef.downloadURL { (url, error) in
+                guard url != nil else {
+                    return
+                }
+            }
+        }
+    }
+    
     func handleSubmit() {
         print("Survey Submitted")
         print("Text: \(textValue)")
         print("Slider: \(sliderValue)")
         print("Multiple Choice: \(pickerValue)")
+        switch selectedQuestionType {
+        case "Camera":
+            if let selectedImage = selectedImage {
+                uploadImage(image: selectedImage)
+            }
+        default:
+            break
+        }
     }
     
     func readValue() {
@@ -122,9 +164,11 @@ struct QuestionView: View {
         timer?.invalidate()
         timer = nil
         recordingDuration = 0.0
+        audioURL = audioRecorder.url
     }
     
     func playRecording() {
+        uploadRecording()
         do {
             let audioSession = AVAudioSession.sharedInstance()
             try audioSession.setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker])
@@ -328,5 +372,5 @@ struct ImagePicker: UIViewControllerRepresentable {
 }
 
 #Preview {
-    QuestionView(surveyId: "-NsFRRs4f6D41Wca9wkn")
+    QuestionView(surveyId: "-NsGPb6VrXgo4myYLOVF")
 }

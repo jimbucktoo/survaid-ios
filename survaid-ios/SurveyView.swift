@@ -130,5 +130,5 @@ struct NavigationBarColorModifier: ViewModifier {
 }
 
 #Preview {
-    SurveyView(surveyId: "-NsFRRs4f6D41Wca9wkn")
+    SurveyView(surveyId: "-NsGPb6VrXgo4myYLOVF")
 }
