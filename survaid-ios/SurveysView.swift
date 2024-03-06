@@ -136,6 +136,7 @@ struct SurveysView: View {
                     }.background(Color.black)
                 }
                 .background(Color.black)
+                .navigationBarHidden(true)
             }
         }
     }
