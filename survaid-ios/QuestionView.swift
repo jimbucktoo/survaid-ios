@@ -23,7 +23,9 @@ struct QuestionView: View {
     @State private var recordingDuration: TimeInterval = 0.0
     @State private var timer: Timer?
     @State private var audioPlayer: AVAudioPlayer?
+    @State private var audioRef: URL?
     @State private var audioURL: URL?
+    @State private var imageURL: URL?
     @State private var selectedImage: UIImage?
     @State private var isImagePickerPresented = false
     
@@ -31,6 +33,8 @@ struct QuestionView: View {
     @State private var selectedQuestionType: String = ""
     @State private var surveyQuestions: [SurveyQuestion] = []
     @State private var isLoading = true
+    
+    @State private var answers: [SurveyAnswer] = []
     
     init(surveyId: String? = nil) {
         self.surveyId = surveyId
@@ -51,34 +55,82 @@ struct QuestionView: View {
                 return
             }
             
-            print("Image uploaded successfully")
+            imageRef.downloadURL { (url, error) in
+                if let downloadURL = url {
+                    self.imageURL = downloadURL
+                    print("Image uploaded successfully. Download URL: \(downloadURL)")
+                } else {
+                    print("Failed to get download URL for image: \(error?.localizedDescription ?? "Unknown error")")
+                }
+            }
         }
     }
     
     func uploadRecording() {
         let recordingRef = storageRef.child("audio/data/\(Date().timeIntervalSince1970).m4a")
         
-        _ = recordingRef.putFile(from: audioURL!, metadata: nil) { error in
-            recordingRef.downloadURL { (url, error) in
-                guard url != nil else {
-                    return
+        _ = recordingRef.putFile(from: audioRef!, metadata: nil) { metadata, error in
+            if let _ = metadata {
+                recordingRef.downloadURL { (url, error) in
+                    if let downloadURL = url {
+                        self.audioURL = downloadURL
+                        print("Recording uploaded successfully. Download URL: \(downloadURL)")
+                    } else {
+                        print("Failed to get download URL for recording: \(error?.localizedDescription ?? "Unknown error")")
+                    }
                 }
+            } else {
+                print("Error uploading recording: \(error?.localizedDescription ?? "Unknown error")")
             }
         }
     }
     
     func handleSubmit() {
+        appendAnswer()
         print("Survey Submitted")
-        print("Text: \(textValue)")
-        print("Slider: \(sliderValue)")
-        print("Multiple Choice: \(pickerValue)")
+        print(answers)
+    }
+    
+    func appendAnswer() {
         switch selectedQuestionType {
+        case "Text":
+            print("Text: \(textValue)")
+        case "Slider":
+            print("Slider: \(sliderValue)")
+        case "Multiple Choice":
+            print("Multiple Choice: \(pickerValue)")
+        case "Microphone":
+            uploadRecording()
         case "Camera":
             if let selectedImage = selectedImage {
                 uploadImage(image: selectedImage)
             }
         default:
-            break
+            print("No Selected Question Type")
+        }
+        
+        if let index = answers.firstIndex(where: { $0.questionIndex == questionIndex }) {
+            answers[index] = SurveyAnswer(questionIndex: questionIndex, type: selectedQuestionType, value: getValueForCurrentQuestion())
+        } else {
+            let answer = SurveyAnswer(questionIndex: questionIndex, type: selectedQuestionType, value: getValueForCurrentQuestion())
+            answers.append(answer)
+        }
+    }
+    
+    private func getValueForCurrentQuestion() -> Any {
+        switch selectedQuestionType {
+        case "Text":
+            return textValue
+        case "Slider":
+            return sliderValue
+        case "Multiple Choice":
+            return pickerValue
+        case "Microphone":
+            return audioURL ?? ""
+        case "Camera":
+            return imageURL ?? ""
+        default:
+            return ""
         }
     }
     
@@ -120,6 +172,7 @@ struct QuestionView: View {
     
     func nextQuestion() {
         print("Next Question")
+        appendAnswer()
         if questionIndex < surveyQuestions.count - 1 {
             questionIndex += 1
             resetInputValues()
@@ -164,11 +217,10 @@ struct QuestionView: View {
         timer?.invalidate()
         timer = nil
         recordingDuration = 0.0
-        audioURL = audioRecorder.url
+        audioRef = audioRecorder.url
     }
     
     func playRecording() {
-        uploadRecording()
         do {
             let audioSession = AVAudioSession.sharedInstance()
             try audioSession.setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker])
@@ -331,6 +383,12 @@ struct SurveyQuestion {
     let title: String
     let description: String
     let type: String
+}
+
+struct SurveyAnswer {
+    let questionIndex: Int
+    let type: String
+    let value: Any
 }
 
 struct ImagePicker: UIViewControllerRepresentable {
