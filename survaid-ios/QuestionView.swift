@@ -1,12 +1,13 @@
 import SwiftUI
 import AVFoundation
 import UIKit
+import FirebaseAuth
 import FirebaseDatabase
 import FirebaseDatabaseSwift
 import FirebaseStorage
 
 struct QuestionView: View {
-    @State private var ref = Database.database().reference()
+    private var dbRef = Database.database().reference()
     private var storageRef = Storage.storage().reference()
     let surveyId: String?
     
@@ -34,7 +35,7 @@ struct QuestionView: View {
     @State private var surveyQuestions: [SurveyQuestion] = []
     @State private var isLoading = true
     
-    @State private var answers: [SurveyAnswer] = []
+    @State private var answers: [Any] = []
     
     init(surveyId: String? = nil) {
         self.surveyId = surveyId
@@ -91,6 +92,15 @@ struct QuestionView: View {
         appendAnswer {
             print("Survey Submitted")
             print(answers)
+            let user = Auth.auth().currentUser
+            print(user?.uid ?? "No User")
+            dbRef.child("surveys").child(surveyId ?? "").child("answers").child(user?.uid ?? "").setValue(answers) { error, _ in
+                if let error = error {
+                    print("Error setting answers: \(error.localizedDescription)")
+                } else {
+                    print("Answers set successfully")
+                }
+            }
         }
     }
     
@@ -121,13 +131,25 @@ struct QuestionView: View {
         }
         
         dispatchGroup.notify(queue: .main) {
-            if let index = answers.firstIndex(where: { $0.questionIndex == questionIndex }) {
-                answers[index] = SurveyAnswer(questionIndex: questionIndex, type: selectedQuestionType, value: getValueForCurrentQuestion())
-            } else {
-                let answer = SurveyAnswer(questionIndex: questionIndex, type: selectedQuestionType, value: getValueForCurrentQuestion())
-                answers.append(answer)
+            var answer: [String: Any] = [:]
+            switch self.selectedQuestionType {
+            case "Text":
+                answer["value"] = self.textValue
+            case "Slider":
+                answer["value"] = self.sliderValue
+            case "Multiple Choice":
+                answer["value"] = self.pickerValue
+            case "Microphone":
+                answer["value"] = self.audioURL?.absoluteString ?? ""
+            case "Camera":
+                answer["value"] = self.imageURL?.absoluteString ?? ""
+            default:
+                break
             }
+            answer["questionIndex"] = self.questionIndex
+            answer["type"] = self.selectedQuestionType
             
+            self.answers.append(answer)
             completion()
         }
     }
@@ -141,9 +163,9 @@ struct QuestionView: View {
         case "Multiple Choice":
             return pickerValue
         case "Microphone":
-            return audioURL ?? ""
+            return audioURL?.absoluteString ?? ""
         case "Camera":
-            return imageURL ?? ""
+            return imageURL?.absoluteString ?? ""
         default:
             return ""
         }
@@ -151,7 +173,7 @@ struct QuestionView: View {
     
     func readValue() {
         isLoading = true
-        ref.child("surveys/\(surveyId ?? "")/questions").observeSingleEvent(of: .value, with: { snapshot in
+        dbRef.child("surveys/\(surveyId ?? "")/questions").observeSingleEvent(of: .value, with: { snapshot in
             if let surveyData = snapshot.value as? NSArray {
                 var questions = [SurveyQuestion]()
                 for data in surveyData {
@@ -401,12 +423,6 @@ struct SurveyQuestion {
     let type: String
 }
 
-struct SurveyAnswer {
-    let questionIndex: Int
-    let type: String
-    let value: Any
-}
-
 struct ImagePicker: UIViewControllerRepresentable {
     @Binding var selectedImage: UIImage?
     
@@ -448,4 +464,3 @@ struct ImagePicker: UIViewControllerRepresentable {
 #Preview {
     QuestionView(surveyId: "-NsGPb6VrXgo4myYLOVF")
 }
-
