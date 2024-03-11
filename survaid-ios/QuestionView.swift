@@ -16,7 +16,7 @@ struct QuestionView: View {
     @State private var maxInput = 10.0
     @State private var interval = 1.0
     @State private var selectedRadio = 0
-    @State private var pickerValue = 2
+    @State private var pickerValue = 5
     @State private var options = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     @State private var audioRecorder: AVAudioRecorder!
     @State private var isRecording = false
@@ -40,7 +40,7 @@ struct QuestionView: View {
         self.surveyId = surveyId
     }
     
-    func uploadImage(image: UIImage) {
+    func uploadImage(image: UIImage, completion: @escaping () -> Void) {
         guard let imageData = image.jpegData(compressionQuality: 0.5) else {
             print("Failed to convert image to data")
             return
@@ -59,6 +59,7 @@ struct QuestionView: View {
                 if let downloadURL = url {
                     self.imageURL = downloadURL
                     print("Image uploaded successfully. Download URL: \(downloadURL)")
+                    completion()
                 } else {
                     print("Failed to get download URL for image: \(error?.localizedDescription ?? "Unknown error")")
                 }
@@ -66,7 +67,7 @@ struct QuestionView: View {
         }
     }
     
-    func uploadRecording() {
+    func uploadRecording(completion: @escaping () -> Void) {
         let recordingRef = storageRef.child("audio/data/\(Date().timeIntervalSince1970).m4a")
         
         _ = recordingRef.putFile(from: audioRef!, metadata: nil) { metadata, error in
@@ -75,6 +76,7 @@ struct QuestionView: View {
                     if let downloadURL = url {
                         self.audioURL = downloadURL
                         print("Recording uploaded successfully. Download URL: \(downloadURL)")
+                        completion()
                     } else {
                         print("Failed to get download URL for recording: \(error?.localizedDescription ?? "Unknown error")")
                     }
@@ -86,12 +88,15 @@ struct QuestionView: View {
     }
     
     func handleSubmit() {
-        appendAnswer()
-        print("Survey Submitted")
-        print(answers)
+        appendAnswer {
+            print("Survey Submitted")
+            print(answers)
+        }
     }
     
-    func appendAnswer() {
+    func appendAnswer(completion: @escaping () -> Void) {
+        let dispatchGroup = DispatchGroup()
+        
         switch selectedQuestionType {
         case "Text":
             print("Text: \(textValue)")
@@ -100,20 +105,30 @@ struct QuestionView: View {
         case "Multiple Choice":
             print("Multiple Choice: \(pickerValue)")
         case "Microphone":
-            uploadRecording()
+            dispatchGroup.enter()
+            uploadRecording {
+                dispatchGroup.leave()
+            }
         case "Camera":
             if let selectedImage = selectedImage {
-                uploadImage(image: selectedImage)
+                dispatchGroup.enter()
+                uploadImage(image: selectedImage) {
+                    dispatchGroup.leave()
+                }
             }
         default:
             print("No Selected Question Type")
         }
         
-        if let index = answers.firstIndex(where: { $0.questionIndex == questionIndex }) {
-            answers[index] = SurveyAnswer(questionIndex: questionIndex, type: selectedQuestionType, value: getValueForCurrentQuestion())
-        } else {
-            let answer = SurveyAnswer(questionIndex: questionIndex, type: selectedQuestionType, value: getValueForCurrentQuestion())
-            answers.append(answer)
+        dispatchGroup.notify(queue: .main) {
+            if let index = answers.firstIndex(where: { $0.questionIndex == questionIndex }) {
+                answers[index] = SurveyAnswer(questionIndex: questionIndex, type: selectedQuestionType, value: getValueForCurrentQuestion())
+            } else {
+                let answer = SurveyAnswer(questionIndex: questionIndex, type: selectedQuestionType, value: getValueForCurrentQuestion())
+                answers.append(answer)
+            }
+            
+            completion()
         }
     }
     
@@ -172,10 +187,11 @@ struct QuestionView: View {
     
     func nextQuestion() {
         print("Next Question")
-        appendAnswer()
-        if questionIndex < surveyQuestions.count - 1 {
-            questionIndex += 1
-            resetInputValues()
+        appendAnswer {
+            if questionIndex < surveyQuestions.count - 1 {
+                questionIndex += 1
+                resetInputValues()
+            }
         }
     }
     
@@ -304,7 +320,7 @@ struct QuestionView: View {
                                 }) {
                                     Image(systemName: "play.circle.fill")
                                         .font(.system(size: 70))
-                                        .foregroundColor(.survaidBlue)
+                                        .foregroundColor(.blue)
                                         .padding(1)
                                         .background(Color.white)
                                         .clipShape(Circle())
@@ -432,3 +448,4 @@ struct ImagePicker: UIViewControllerRepresentable {
 #Preview {
     QuestionView(surveyId: "-NsGPb6VrXgo4myYLOVF")
 }
+
