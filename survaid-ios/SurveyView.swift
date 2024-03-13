@@ -1,10 +1,12 @@
 import SwiftUI
+import FirebaseAuth
 import FirebaseDatabase
 import FirebaseDatabaseSwift
 
 struct SurveyView: View {
     private var ref = Database.database().reference()
     let surveyId: String?
+    let user = Auth.auth().currentUser
     @State private var surveyData: [String: Any]?
     @State private var blackImage: String = "https://firebasestorage.googleapis.com/v0/b/survaidapp-583db.appspot.com/o/black.jpg?alt=media&token=465f411a-ff69-4577-bd37-f1f539f39003"
     
@@ -16,6 +18,40 @@ struct SurveyView: View {
         ref.child("surveys/\(surveyId ?? "")" ).observeSingleEvent(of: .value, with: { snapshot in
             if let survey = snapshot.value as? [String: Any] {
                 self.surveyData = survey
+            }
+        })
+    }
+    
+    func beginSurvey() {
+        print("Begin Survey")
+        var usersArray = [String]()
+        ref.child("surveys/\(surveyId ?? "")/participants").observeSingleEvent(of: .value, with: { snapshot in
+            if snapshot.exists() {
+                print("Exists")
+                if let participants = snapshot.value as? [String] {
+                    usersArray.append(contentsOf: participants)
+                }
+                if let currentUserUID = user?.uid {
+                    usersArray.append(currentUserUID)
+                }
+                ref.child("surveys/\(surveyId ?? "")/participants").setValue(usersArray) { error, _ in
+                    if let error = error {
+                        print("Error updating participants: \(error.localizedDescription)")
+                    } else {
+                        print("Participants updated successfully")
+                    }
+                }
+            } else {
+                print("Not Exists")
+                usersArray.append(user?.uid ?? "")
+                print(usersArray)
+                ref.child("surveys/\(surveyId ?? "")/participants").setValue(usersArray) { error, _ in
+                    if let error = error {
+                        print("Error updating participants: \(error.localizedDescription)")
+                    } else {
+                        print("Participants updated successfully")
+                    }
+                }
             }
         })
     }
@@ -43,7 +79,9 @@ struct SurveyView: View {
                             }
                         }
                         .frame(maxWidth: .infinity, maxHeight: 320)
-                        NavigationLink(destination: QuestionView(surveyId: surveyId)) {
+                        NavigationLink(destination: QuestionView(surveyId: surveyId).onAppear {
+                            self.beginSurvey()
+                        }) {
                             Text("Begin Survey")
                         }
                         .padding(20)
