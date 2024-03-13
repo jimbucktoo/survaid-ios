@@ -1,6 +1,6 @@
 # survaid-ios
 
-survaid-ios is part of a web and mobile platform that facilitates real-time mobile sensor data collection from survey participants.
+Survaid is a web and mobile application that facilitates real-time mobile sensor data collection from survey participants, changing the way researchers gather data driven insights. By using the power of modern smartphone sensors, Survaid provides a complete toolkit for building, deploying, and analyzing customized mobile surveys that create detailed reports.
 
 ## Links
 
