@@ -8,10 +8,30 @@ struct SurveyView: View {
     let surveyId: String?
     let user = Auth.auth().currentUser
     @State private var surveyData: [String: Any]?
+    @State private var status: String = "Not Started"
     @State private var blackImage: String = "https://firebasestorage.googleapis.com/v0/b/survaidapp-583db.appspot.com/o/black.jpg?alt=media&token=465f411a-ff69-4577-bd37-f1f539f39003"
     
     init(surveyId: String? = nil) {
         self.surveyId = surveyId
+    }
+    
+    func loadStatus() {
+        ref.child("surveys/\(surveyId ?? "")/status/\(user?.uid ?? "")").observeSingleEvent(of: .value, with: { snapshot in
+            if snapshot.exists() {
+                if let statusData = snapshot.value as? String {
+                    self.status = statusData
+                }
+            } else {
+                ref.child("surveys/\(surveyId ?? "")/status/\(user?.uid ?? "")").setValue("Not Started") { error, _ in
+                    if let error = error {
+                        print("Error updating status: \(error.localizedDescription)")
+                    } else {
+                        self.status = "Not Started"
+                        print("Status updated successfully")
+                    }
+                }
+            }
+        })
     }
     
     func loadSurvey() {
@@ -22,45 +42,51 @@ struct SurveyView: View {
         })
     }
     
-    func beginSurvey() {
-        print("Begin Survey")
-        var usersArray = [String]()
-        ref.child("surveys/\(surveyId ?? "")/participants").observeSingleEvent(of: .value, with: { snapshot in
-            if snapshot.exists() {
-                print("Exists")
-                if let participants = snapshot.value as? [String] {
-                    usersArray.append(contentsOf: participants)
-                }
-                if let currentUserUID = user?.uid {
-                    usersArray.append(currentUserUID)
-                }
-                ref.child("surveys/\(surveyId ?? "")/participants").setValue(usersArray) { error, _ in
-                    if let error = error {
-                        print("Error updating participants: \(error.localizedDescription)")
-                    } else {
-                        print("Participants updated successfully")
+    func participate() {
+        if status == "Not Started" {
+            var usersArray = [String]()
+            ref.child("surveys/\(surveyId ?? "")/participants").observeSingleEvent(of: .value, with: { snapshot in
+                if snapshot.exists() {
+                    if let participants = snapshot.value as? [String] {
+                        usersArray.append(contentsOf: participants)
+                    }
+                    if let currentUserUID = user?.uid {
+                        usersArray.append(currentUserUID)
+                    }
+                    ref.child("surveys/\(surveyId ?? "")/participants").setValue(usersArray) { error, _ in
+                        if let error = error {
+                            print("Error updating participants: \(error.localizedDescription)")
+                        } else {
+                            print("Participants updated successfully")
+                        }
+                    }
+                } else {
+                    usersArray.append(user?.uid ?? "")
+                    print(usersArray)
+                    ref.child("surveys/\(surveyId ?? "")/participants").setValue(usersArray) { error, _ in
+                        if let error = error {
+                            print("Error updating participants: \(error.localizedDescription)")
+                        } else {
+                            print("Participants updated successfully")
+                        }
                     }
                 }
+            })
+        }
+        ref.child("surveys/\(surveyId ?? "")/status/\(user?.uid ?? "")").setValue("Started") { error, _ in
+            if let error = error {
+                print("Error updating status: \(error.localizedDescription)")
             } else {
-                print("Not Exists")
-                usersArray.append(user?.uid ?? "")
-                print(usersArray)
-                ref.child("surveys/\(surveyId ?? "")/participants").setValue(usersArray) { error, _ in
-                    if let error = error {
-                        print("Error updating participants: \(error.localizedDescription)")
-                    } else {
-                        print("Participants updated successfully")
-                    }
-                }
+                print("Status updated successfully")
             }
-        })
+        }
     }
     
     var body: some View {
         ScrollView {
             VStack {
                 if let survey = surveyData {
-                    VStack {
+                    VStack(spacing: 0) {
                         ZStack {
                             Color.black
                             AsyncImage(url: URL(string: "\(survey["surveyImage"] as? String ?? "\(blackImage)")")) { phase in
@@ -79,16 +105,31 @@ struct SurveyView: View {
                             }
                         }
                         .frame(maxWidth: .infinity, maxHeight: 320)
-                        NavigationLink(destination: QuestionView(surveyId: surveyId).onAppear {
-                            self.beginSurvey()
-                        }) {
-                            Text("Begin Survey")
+                        VStack {
+                            Text("Status: \(status)")
+                                .foregroundColor(.white)
                         }
-                        .padding(20)
-                        .background(Color.survaidBlue)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
-                        .padding()
+                        .frame(height: 40)
+                        .frame(maxWidth: .infinity)
+                        .background(
+                            status == "Not Started" ? Color.survaidBlue :
+                                status == "Started" ? Color.survaidOrange :
+                                status == "Completed" ? Color.black :
+                                Color.black
+                        )
+                        .edgesIgnoringSafeArea(.all)
+                        if status != "Completed" {
+                            NavigationLink(destination: QuestionView(surveyId: surveyId).onAppear {
+                                self.participate()
+                            }) {
+                                Text(status == "Started" ? "Continue Survey" : "Begin Survey")
+                            }
+                            .padding(20)
+                            .background(status == "Started" ? Color.survaidOrange : Color.survaidBlue)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                            .padding()
+                        }
                         HStack {
                             Image(systemName: "person.fill").foregroundColor(.black).padding(.leading, 10).padding(.top, 10).padding(.bottom, 10)
                             Text(survey["createdByEmail"] as? String ?? "").foregroundColor(.black).padding(.top, 10)
@@ -135,6 +176,7 @@ struct SurveyView: View {
         .navigationBarColor(.black)
         .onAppear{
             loadSurvey()
+            loadStatus()
         }
     }
 }
@@ -168,5 +210,5 @@ struct NavigationBarColorModifier: ViewModifier {
 }
 
 #Preview {
-    SurveyView(surveyId: "-NsGPb6VrXgo4myYLOVF")
+    SurveyView(surveyId: "-NstKg4GUvuAyxN2WLhk")
 }

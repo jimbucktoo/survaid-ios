@@ -9,7 +9,7 @@ import FirebaseStorage
 struct QuestionView: View {
     private var dbRef = Database.database().reference()
     private var storageRef = Storage.storage().reference()
-    let surveyId: String?
+    @State private var isLoading = true
     @Environment(\.dismiss) private var dismiss
     
     @State private var textValue = ""
@@ -31,11 +31,10 @@ struct QuestionView: View {
     @State private var selectedImage: UIImage?
     @State private var isImagePickerPresented = false
     
+    let surveyId: String?
     @State private var questionIndex = 0
     @State private var selectedQuestionType: String = ""
     @State private var surveyQuestions: [SurveyQuestion] = []
-    @State private var isLoading = true
-    
     @State private var answers: [Any] = []
     
     init(surveyId: String? = nil) {
@@ -91,15 +90,19 @@ struct QuestionView: View {
     
     func handleSubmit() {
         appendAnswer {
-            print("Survey Submitted")
-            print(answers)
             let user = Auth.auth().currentUser
-            print(user?.uid ?? "No User")
             dbRef.child("surveys").child(surveyId ?? "").child("answers").child(user?.uid ?? "").setValue(answers) { error, _ in
                 if let error = error {
                     print("Error setting answers: \(error.localizedDescription)")
                 } else {
                     print("Answers set successfully")
+                    dbRef.child("surveys/\(surveyId ?? "")/status/\(user?.uid ?? "")").setValue("Completed") { error, _ in
+                        if let error = error {
+                            print("Error updating status: \(error.localizedDescription)")
+                        } else {
+                            print("Status updated successfully")
+                        }
+                    }
                     dismiss()
                 }
             }
@@ -156,7 +159,7 @@ struct QuestionView: View {
         }
     }
     
-    private func getValueForCurrentQuestion() -> Any {
+    func getValueForCurrentQuestion() -> Any {
         switch selectedQuestionType {
         case "Text":
             return textValue
@@ -202,7 +205,6 @@ struct QuestionView: View {
     }
     
     func previousQuestion() {
-        print("Previous Question")
         if questionIndex > 0 {
             questionIndex -= 1
             resetInputValues()
@@ -210,7 +212,6 @@ struct QuestionView: View {
     }
     
     func nextQuestion() {
-        print("Next Question")
         appendAnswer {
             if questionIndex < surveyQuestions.count - 1 {
                 questionIndex += 1
@@ -224,7 +225,6 @@ struct QuestionView: View {
     }
     
     func startRecording() {
-        print("Starting Recording")
         let audioSession = AVAudioSession.sharedInstance()
         
         do {
@@ -251,7 +251,6 @@ struct QuestionView: View {
     }
     
     func stopRecording() {
-        print("Stopping Recording")
         audioRecorder.stop()
         isRecording = false
         timer?.invalidate()
@@ -464,5 +463,5 @@ struct ImagePicker: UIViewControllerRepresentable {
 }
 
 #Preview {
-    QuestionView(surveyId: "-NsGPb6VrXgo4myYLOVF")
+    QuestionView(surveyId: "-NstKg4GUvuAyxN2WLhk")
 }
