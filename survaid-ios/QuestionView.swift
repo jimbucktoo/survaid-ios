@@ -10,6 +10,7 @@ struct QuestionView: View {
     private var dbRef = Database.database().reference()
     private var storageRef = Storage.storage().reference()
     let surveyId: String?
+    @Environment(\.dismiss) private var dismiss
     
     @State private var textValue = ""
     @State private var sliderValue = 5.0
@@ -99,6 +100,7 @@ struct QuestionView: View {
                     print("Error setting answers: \(error.localizedDescription)")
                 } else {
                     print("Answers set successfully")
+                    dismiss()
                 }
             }
         }
