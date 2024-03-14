@@ -5,7 +5,7 @@ import FirebaseDatabaseSwift
 
 struct SignUpView: View {
     @State private var ref = Database.database().reference()
-    
+    @Environment(\.dismiss) private var dismiss
     @State private var firstName = ""
     @State private var lastName = ""
     @State private var email = ""
@@ -65,6 +65,23 @@ struct SignUpView: View {
                     .foregroundColor(.white).frame(width: 300, height: 50).background(Color.blue).cornerRadius(10)
                 }.padding(.bottom, 40)
             }
+            .navigationBarHidden(true)
+            .navigationBarBackButtonHidden(true)
+            .overlay(
+                HStack {
+                    Button(action: {
+                        dismiss()
+                    }) {
+                        Image(systemName: "chevron.left")
+                            .foregroundColor(.black)
+                        Text("Back")
+                            .foregroundColor(.black)
+                            .padding(.leading, 5)
+                    }
+                }
+                    .padding(.horizontal)
+                , alignment: .topLeading
+            )
         }
     }
 }
