@@ -7,6 +7,7 @@ struct SurveyView: View {
     private var ref = Database.database().reference()
     let surveyId: String?
     let user = Auth.auth().currentUser
+    @Environment(\.dismiss) private var dismiss
     @State private var surveyData: [String: Any]?
     @State private var status: String = "Not Started"
     @State private var blackImage: String = "https://firebasestorage.googleapis.com/v0/b/survaidapp-583db.appspot.com/o/black.jpg?alt=media&token=465f411a-ff69-4577-bd37-f1f539f39003"
@@ -170,10 +171,18 @@ struct SurveyView: View {
                 }
             }.background(Color.black).cornerRadius(10)
         }
+        .navigationBarTitle("", displayMode: .inline)
+        .navigationBarBackButtonHidden(true)
+        .navigationBarItems(leading: Button(action: {
+            dismiss()
+        }) {
+            HStack {
+                Image(systemName: "chevron.left")
+                Text("Surveys")
+            }
+        }
+        )
         .background(Color.black)
-        .navigationTitle(surveyData?["title"] as? String ?? "")
-        .navigationBarTitleDisplayMode(.inline)
-        .navigationBarColor(.black)
         .onAppear{
             loadSurvey()
             loadStatus()

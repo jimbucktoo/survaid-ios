@@ -74,7 +74,7 @@ struct SignUpView: View {
                     }) {
                         Image(systemName: "chevron.left")
                             .foregroundColor(.black)
-                        Text("Back")
+                        Text("Sign In")
                             .foregroundColor(.black)
                             .padding(.leading, 5)
                     }
