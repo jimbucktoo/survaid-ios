@@ -102,7 +102,6 @@ struct SurveysView: View {
                                             Text("Price: $\(survey.price)").foregroundColor(.black).padding(.trailing, 10).padding(.bottom, 10)
                                         }
                                         ZStack {
-                                            Color.black
                                             AsyncImage(url: URL(string: "\(survey.surveyImage)")) { phase in
                                                 switch phase {
                                                 case .empty:
@@ -111,14 +110,14 @@ struct SurveysView: View {
                                                     image
                                                         .resizable()
                                                         .aspectRatio(contentMode: .fill)
+                                                        .frame(maxWidth: .infinity, maxHeight: 180)
                                                 case .failure(let error):
                                                     Text("Failed to load image: \(error.localizedDescription)")
                                                 @unknown default:
                                                     EmptyView()
                                                 }
                                             }
-                                        }
-                                        .frame(maxWidth: .infinity, maxHeight: 320)
+                                        }.clipped()
                                         HStack {
                                             Image(systemName: "text.bubble.fill").foregroundColor(.black).padding(.leading, 10).padding(.top, 10)
                                             Text("Comments").foregroundColor(.black).padding(.top, 10)
@@ -127,7 +126,7 @@ struct SurveysView: View {
                                             Text("Participants").foregroundColor(.black).padding(.trailing, 10).padding(.top, 10)
                                         }.padding(.bottom, 20)
                                     }
-                                    .frame(height: 300).overlay(
+                                    .frame(maxWidth: .infinity, maxHeight: 320).overlay(
                                         RoundedRectangle(cornerRadius: 10)
                                             .stroke(Color.black, lineWidth: 2)).background(Color.white)
                                 })

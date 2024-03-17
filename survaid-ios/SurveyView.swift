@@ -89,7 +89,6 @@ struct SurveyView: View {
                 if let survey = surveyData {
                     VStack(spacing: 0) {
                         ZStack {
-                            Color.black
                             AsyncImage(url: URL(string: "\(survey["surveyImage"] as? String ?? "\(blackImage)")")) { phase in
                                 switch phase {
                                 case .empty:
@@ -98,6 +97,7 @@ struct SurveyView: View {
                                     image
                                         .resizable()
                                         .aspectRatio(contentMode: .fill)
+                                        .frame(maxWidth: .infinity, maxHeight: 200)
                                 case .failure(let error):
                                     Text("Failed to load image: \(error.localizedDescription)")
                                 @unknown default:
@@ -105,7 +105,7 @@ struct SurveyView: View {
                                 }
                             }
                         }
-                        .frame(maxWidth: .infinity, maxHeight: 320)
+                        .clipped()
                         VStack {
                             Text("Status: \(status)")
                                 .foregroundColor(.white)
