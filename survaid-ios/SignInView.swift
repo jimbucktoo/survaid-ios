@@ -2,12 +2,11 @@ import SwiftUI
 import FirebaseAuth
 
 struct SignInView: View {
-    
     @State private var email = ""
     @State private var password = ""
     @State private var signInSuccess = false
     
-    func signInUser() {
+    func signIn() {
         Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
             guard error == nil else {
                 print(error ?? "Sign In Error")
@@ -42,12 +41,12 @@ struct SignInView: View {
                         .foregroundColor(.black)
                     ).frame(width: 300, height: 50, alignment: .center).background(Color.white).cornerRadius(10).multilineTextAlignment(.center).foregroundColor(.black)
                     Button("Sign In") {
-                        signInUser()
+                        signIn()
                     }
                     .foregroundColor(.white).frame(width: 300, height: 50).background(Color.blue).cornerRadius(10)
-                    NavigationLink(destination: SignUpView(), label: {
-                        Text("Don't have an account? Sign up now").padding(.top, 20)
-                    })
+                    NavigationLink(destination: SignUpView()) {
+                        Text("Don't have an account? Sign up now").padding(.top, 20).foregroundColor(.survaidBlue)
+                    }
                 }
             }
         }

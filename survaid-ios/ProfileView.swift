@@ -1,7 +1,29 @@
 import SwiftUI
+import FirebaseAuth
+import FirebaseDatabase
+import FirebaseDatabaseSwift
+import FirebaseStorage
 
 struct ProfileView: View {
+    let user = Auth.auth().currentUser
+    private var dbRef = Database.database().reference()
+    private var storageRef = Storage.storage().reference()
+    @State private var userProfile: [String: Any]?
     @State private var index = 0
+    
+    func loadProfile() {
+        dbRef.child("users").observeSingleEvent(of: .value, with: { snapshot in
+            if let users = snapshot.value as? [String: Any] {
+                for (userId, userData) in users {
+                    if userId == user?.uid {
+                        self.userProfile = userData as? [String: Any]
+                        break
+                    }
+                }
+            }
+        })
+    }
+    
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -9,7 +31,7 @@ struct ProfileView: View {
                     Image(systemName: "person.fill")
                         .font(.system(size: 40))
                         .foregroundColor(.survaidBlue)
-                    Text("Jimmy Liang")
+                    Text("\(userProfile?["firstName"] ?? "") \(userProfile?["lastName"] ?? "")")
                         .font(.title)
                         .fontWeight(.bold)
                         .foregroundColor(.survaidBlue)
@@ -21,28 +43,21 @@ struct ProfileView: View {
                     ZStack {
                         Rectangle()
                             .fill(Color.black)
-                            .frame(height: 160)
-                        Image("jamesliang")
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(width: 100, height: 100)
-                            .clipShape(Circle())
-                            .overlay(Circle().stroke(Color.black, lineWidth: 2))
-                            .offset(y: 0)
-                            .offset(x: -80)
-                        Text("Jimmy Liang")
-                            .foregroundColor(.white)
-                            .fontWeight(.bold)
-                            .offset(y: -30)
-                            .offset(x: 50)
-                        Text("@JimmyLiang")
-                            .foregroundColor(.white)
-                            .offset(y: 0)
-                            .offset(x: 50)
-                        Text("★★★★✩ (31)")
-                            .foregroundColor(.survaidBlue)
-                            .offset(y: 30)
-                            .offset(x: 54)
+                            .frame(height: 180)
+                        VStack {
+                            Image("jamesliang")
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 100, height: 100)
+                                .clipShape(Circle())
+                                .overlay(Circle().stroke(Color.black, lineWidth: 2))
+                            Spacer()
+                            Text("\(userProfile?["firstName"] ?? "") \(userProfile?["lastName"] ?? "")")
+                                .foregroundColor(.white)
+                                .fontWeight(.bold)
+                            Text("\(userProfile?["email"] ?? "")")
+                                .foregroundColor(.white)
+                        }.padding(.bottom, 20)
                     }
                     ZStack {
                         Rectangle().fill(Color.survaidBlue).frame(height: 140)
@@ -158,7 +173,11 @@ struct ProfileView: View {
                         }
                     }
                 }
-            }.background(Color.black)
+            }
+            .background(Color.black)
+            .onAppear{
+                loadProfile()
+            }
         }
     }
 }

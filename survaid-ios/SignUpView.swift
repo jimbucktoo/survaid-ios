@@ -65,23 +65,16 @@ struct SignUpView: View {
                     .foregroundColor(.white).frame(width: 300, height: 50).background(Color.blue).cornerRadius(10)
                 }.padding(.bottom, 40)
             }
-            .navigationBarHidden(true)
+            .navigationBarTitle("", displayMode: .inline)
             .navigationBarBackButtonHidden(true)
-            .overlay(
+            .navigationBarItems(leading: Button(action: {
+                dismiss()
+            }) {
                 HStack {
-                    Button(action: {
-                        dismiss()
-                    }) {
-                        Image(systemName: "chevron.left")
-                            .foregroundColor(.black)
-                        Text("Sign In")
-                            .foregroundColor(.black)
-                            .padding(.leading, 5)
-                    }
-                }
-                    .padding(.horizontal)
-                , alignment: .topLeading
-            )
+                    Image(systemName: "chevron.left")
+                    Text("Sign In")
+                }.foregroundColor(.white)
+            })
         }
     }
 }

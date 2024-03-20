@@ -25,7 +25,6 @@ struct ActiveSurveysView: View {
                         self.activeSurveys.append(survey)
                     }
                 }
-                print(activeSurveys)
             }
         }) { error in
             print(error.localizedDescription)

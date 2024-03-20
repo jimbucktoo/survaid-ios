@@ -25,7 +25,6 @@ struct CompletedSurveysView: View {
                         self.completedSurveys.append(survey)
                     }
                 }
-                print(completedSurveys)
             }
         }) { error in
             print(error.localizedDescription)
@@ -38,7 +37,7 @@ struct CompletedSurveysView: View {
                 Image(systemName: "doc")
                     .font(.system(size: 40))
                     .foregroundColor(.survaidBlue)
-                Text("Active Surveys")
+                Text("Completed Surveys")
                     .font(.title)
                     .fontWeight(.bold)
                     .foregroundColor(.survaidBlue)

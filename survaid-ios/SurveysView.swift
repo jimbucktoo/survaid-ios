@@ -63,7 +63,7 @@ struct SurveysView: View {
                     loadSurveys()
                 }
             } else {
-                ScrollView {
+                VStack {
                     HStack {
                         Image(systemName: "doc.fill")
                             .font(.system(size: 40))
@@ -76,63 +76,66 @@ struct SurveysView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.top, 20)
                     .padding(.horizontal, 20)
-                    LazyVStack {
-                        ForEach(surveysData, id: \.id) { survey in
-                            let timeDifference = calculateTimeDifference(for: survey.createdAt)
-                            HStack {
-                                NavigationLink(destination: SurveyView(surveyId: survey.id), label: {
-                                    VStack {
-                                        HStack {
-                                            Image(systemName: "doc.fill").foregroundColor(.survaidBlue).padding(.leading, 10).padding(.bottom, 10)
-                                            Text("\(survey.title)").foregroundColor(.survaidBlue)
-                                                .fontWeight(.bold)
-                                                .lineLimit(1)
-                                                .truncationMode(.tail)
-                                                .padding(.bottom, 10)
-                                            Spacer()
-                                            Text("\(timeDifference)").foregroundColor(.survaidOrange).fontWeight(.bold).padding(.trailing, 10).padding(.bottom, 10)
-                                        }.padding(.top, 20)
-                                        HStack {
-                                            Image(systemName: "person.fill").foregroundColor(.black).padding(.leading, 10).padding(.bottom, 10)
-                                            Text("\(survey.email)").foregroundColor(.black)
-                                                .lineLimit(1)
-                                                .truncationMode(.tail)
-                                                .padding(.bottom, 10)
-                                            Spacer()
-                                            Text("Price: $\(survey.price)").foregroundColor(.black).padding(.trailing, 10).padding(.bottom, 10)
-                                        }
-                                        ZStack {
-                                            AsyncImage(url: URL(string: "\(survey.surveyImage)")) { phase in
-                                                switch phase {
-                                                case .empty:
-                                                    ProgressView()
-                                                case .success(let image):
-                                                    image
-                                                        .resizable()
-                                                        .aspectRatio(contentMode: .fill)
-                                                        .frame(maxWidth: .infinity, maxHeight: 180)
-                                                case .failure(let error):
-                                                    Text("Failed to load image: \(error.localizedDescription)")
-                                                @unknown default:
-                                                    EmptyView()
-                                                }
+                    .background(Color.black)
+                    ScrollView {
+                        LazyVStack {
+                            ForEach(surveysData, id: \.id) { survey in
+                                let timeDifference = calculateTimeDifference(for: survey.createdAt)
+                                HStack {
+                                    NavigationLink(destination: SurveyView(surveyId: survey.id), label: {
+                                        VStack {
+                                            HStack {
+                                                Image(systemName: "doc.fill").foregroundColor(.survaidBlue).padding(.leading, 10).padding(.bottom, 10)
+                                                Text("\(survey.title)").foregroundColor(.survaidBlue)
+                                                    .fontWeight(.bold)
+                                                    .lineLimit(1)
+                                                    .truncationMode(.tail)
+                                                    .padding(.bottom, 10)
+                                                Spacer()
+                                                Text("\(timeDifference)").foregroundColor(.survaidOrange).fontWeight(.bold).padding(.trailing, 10).padding(.bottom, 10)
+                                            }.padding(.top, 20)
+                                            HStack {
+                                                Image(systemName: "person.fill").foregroundColor(.black).padding(.leading, 10).padding(.bottom, 10)
+                                                Text("\(survey.email)").foregroundColor(.black)
+                                                    .lineLimit(1)
+                                                    .truncationMode(.tail)
+                                                    .padding(.bottom, 10)
+                                                Spacer()
+                                                Text("Price: $\(survey.price)").foregroundColor(.black).padding(.trailing, 10).padding(.bottom, 10)
                                             }
-                                        }.clipped()
-                                        HStack {
-                                            Image(systemName: "text.bubble.fill").foregroundColor(.black).padding(.leading, 10).padding(.top, 10)
-                                            Text("Comments").foregroundColor(.black).padding(.top, 10)
-                                            Spacer()
-                                            Image(systemName: "person.2.fill").foregroundColor(.black).padding(.leading, 10).padding(.top, 10)
-                                            Text("Participants").foregroundColor(.black).padding(.trailing, 10).padding(.top, 10)
-                                        }.padding(.bottom, 20)
-                                    }
-                                    .frame(maxWidth: .infinity, maxHeight: 320).overlay(
-                                        RoundedRectangle(cornerRadius: 10)
-                                            .stroke(Color.black, lineWidth: 2)).background(Color.white)
-                                })
-                            }.background(Color.black).cornerRadius(10)
-                        }.padding(10)
-                    }.background(Color.black)
+                                            ZStack {
+                                                AsyncImage(url: URL(string: "\(survey.surveyImage)")) { phase in
+                                                    switch phase {
+                                                    case .empty:
+                                                        ProgressView()
+                                                    case .success(let image):
+                                                        image
+                                                            .resizable()
+                                                            .aspectRatio(contentMode: .fill)
+                                                            .frame(maxWidth: .infinity, maxHeight: 180)
+                                                    case .failure(let error):
+                                                        Text("Failed to load image: \(error.localizedDescription)")
+                                                    @unknown default:
+                                                        EmptyView()
+                                                    }
+                                                }
+                                            }.clipped()
+                                            HStack {
+                                                Image(systemName: "text.bubble.fill").foregroundColor(.black).padding(.leading, 10).padding(.top, 10)
+                                                Text("Comments").foregroundColor(.black).padding(.top, 10)
+                                                Spacer()
+                                                Image(systemName: "person.2.fill").foregroundColor(.black).padding(.leading, 10).padding(.top, 10)
+                                                Text("Participants").foregroundColor(.black).padding(.trailing, 10).padding(.top, 10)
+                                            }.padding(.bottom, 20)
+                                        }
+                                        .frame(maxWidth: .infinity, maxHeight: 320).overlay(
+                                            RoundedRectangle(cornerRadius: 10)
+                                                .stroke(Color.black, lineWidth: 2)).background(Color.white)
+                                    })
+                                }.background(Color.white).cornerRadius(10)
+                            }.padding(10)
+                        }.background(Color.black)
+                    }
                 }
                 .background(Color.black)
                 .navigationBarHidden(true)
