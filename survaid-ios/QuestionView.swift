@@ -89,6 +89,7 @@ struct QuestionView: View {
     }
     
     func handleSubmit() {
+        print(answers)
         appendAnswer {
             let user = Auth.auth().currentUser
             dbRef.child("surveys").child(surveyId ?? "").child("answers").child(user?.uid ?? "").setValue(answers) { error, _ in
@@ -120,8 +121,15 @@ struct QuestionView: View {
         case "Multiple Choice":
             print("Multiple Choice: \(pickerValue)")
         case "Microphone":
-            dispatchGroup.enter()
-            uploadRecording {
+            if isRecording {
+                stopRecording()
+                dispatchGroup.enter()
+                uploadRecording {
+                    dispatchGroup.leave()
+                }
+            } else {
+                self.audioURL = nil
+                dispatchGroup.enter()
                 dispatchGroup.leave()
             }
         case "Camera":
@@ -130,6 +138,10 @@ struct QuestionView: View {
                 uploadImage(image: selectedImage) {
                     dispatchGroup.leave()
                 }
+            } else {
+                self.imageURL = nil
+                dispatchGroup.enter()
+                dispatchGroup.leave()
             }
         default:
             print("No Selected Question Type")
@@ -153,7 +165,6 @@ struct QuestionView: View {
             }
             answer["questionIndex"] = self.questionIndex
             answer["type"] = self.selectedQuestionType
-            
             self.answers.append(answer)
             completion()
         }
@@ -216,6 +227,8 @@ struct QuestionView: View {
             if questionIndex < surveyQuestions.count - 1 {
                 questionIndex += 1
                 resetInputValues()
+            } else {
+                handleSubmit()
             }
         }
     }
