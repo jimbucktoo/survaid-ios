@@ -422,7 +422,19 @@ struct QuestionView: View {
                     Spacer()
                 }
             }
-        }.onAppear {
+        }
+        .navigationBarTitle("", displayMode: .inline)
+        .navigationBarBackButtonHidden(true)
+        .navigationBarItems(leading: Button(action: {
+            dismiss()
+        }) {
+            HStack {
+                Image(systemName: "chevron.left")
+                Text("Survey")
+            }
+        }
+        )
+        .onAppear {
             readValue()
         }
     }
