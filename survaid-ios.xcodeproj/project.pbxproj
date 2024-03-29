@@ -20,7 +20,6 @@
 		C3260D742BA9FF16002E5EEB /* ChangeProfilePicture.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3260D732BA9FF16002E5EEB /* ChangeProfilePicture.swift */; };
 		C3260D762BA9FF48002E5EEB /* EditParticipantInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3260D752BA9FF48002E5EEB /* EditParticipantInformationView.swift */; };
 		C335D55B2B04019C008C611D /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = C335D55A2B04019C008C611D /* Color.swift */; };
-		C335D55D2B040DB9008C611D /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C335D55C2B040DB9008C611D /* CardView.swift */; };
 		C3545E582AF4095C00221106 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3545E572AF4095C00221106 /* MenuView.swift */; };
 		C372810D2B50F15C0091349F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C372810C2B50F15B0091349F /* GoogleService-Info.plist */; };
 		C38C5ACE2B50A09D00DCB829 /* QuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C38C5ACD2B50A09D00DCB829 /* QuestionView.swift */; };
@@ -35,7 +34,6 @@
 		C3E8A6CD2B3A4075007D1C66 /* ActiveSurveysView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3E8A6CC2B3A4075007D1C66 /* ActiveSurveysView.swift */; };
 		C3E8A6CF2B3A4335007D1C66 /* ParticipantInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3E8A6CE2B3A4335007D1C66 /* ParticipantInformationView.swift */; };
 		C3E8A6D12B3A4346007D1C66 /* CompletedSurveysView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3E8A6D02B3A4346007D1C66 /* CompletedSurveysView.swift */; };
-		C3E8A6D32B3A4352007D1C66 /* ReviewsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3E8A6D22B3A4352007D1C66 /* ReviewsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,7 +70,6 @@
 		C3260D732BA9FF16002E5EEB /* ChangeProfilePicture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeProfilePicture.swift; sourceTree = "<group>"; };
 		C3260D752BA9FF48002E5EEB /* EditParticipantInformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditParticipantInformationView.swift; sourceTree = "<group>"; };
 		C335D55A2B04019C008C611D /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
-		C335D55C2B040DB9008C611D /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		C3545E572AF4095C00221106 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		C372810C2B50F15B0091349F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C38C5ACD2B50A09D00DCB829 /* QuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionView.swift; sourceTree = "<group>"; };
@@ -81,7 +78,6 @@
 		C3E8A6CC2B3A4075007D1C66 /* ActiveSurveysView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveSurveysView.swift; sourceTree = "<group>"; };
 		C3E8A6CE2B3A4335007D1C66 /* ParticipantInformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantInformationView.swift; sourceTree = "<group>"; };
 		C3E8A6D02B3A4346007D1C66 /* CompletedSurveysView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedSurveysView.swift; sourceTree = "<group>"; };
-		C3E8A6D22B3A4352007D1C66 /* ReviewsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,10 +145,8 @@
 				C3E8A6CC2B3A4075007D1C66 /* ActiveSurveysView.swift */,
 				C3E8A6D02B3A4346007D1C66 /* CompletedSurveysView.swift */,
 				C38C5ACD2B50A09D00DCB829 /* QuestionView.swift */,
-				C3E8A6D22B3A4352007D1C66 /* ReviewsView.swift */,
 				C31EEFD02ADDF42F004DA615 /* SettingsView.swift */,
 				C335D55A2B04019C008C611D /* Color.swift */,
-				C335D55C2B040DB9008C611D /* CardView.swift */,
 				C3260D732BA9FF16002E5EEB /* ChangeProfilePicture.swift */,
 				C3260D752BA9FF48002E5EEB /* EditParticipantInformationView.swift */,
 				C372810C2B50F15B0091349F /* GoogleService-Info.plist */,
@@ -330,7 +324,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C3545E582AF4095C00221106 /* MenuView.swift in Sources */,
-				C335D55D2B040DB9008C611D /* CardView.swift in Sources */,
 				C3E8A6CF2B3A4335007D1C66 /* ParticipantInformationView.swift in Sources */,
 				C31EEFD32ADDF4FD004DA615 /* SurveysView.swift in Sources */,
 				C3260D742BA9FF16002E5EEB /* ChangeProfilePicture.swift in Sources */,
@@ -339,7 +332,6 @@
 				C31EEFD12ADDF42F004DA615 /* SettingsView.swift in Sources */,
 				C3E8A6D12B3A4346007D1C66 /* CompletedSurveysView.swift in Sources */,
 				C335D55B2B04019C008C611D /* Color.swift in Sources */,
-				C3E8A6D32B3A4352007D1C66 /* ReviewsView.swift in Sources */,
 				C3260D762BA9FF48002E5EEB /* EditParticipantInformationView.swift in Sources */,
 				C38C5ACE2B50A09D00DCB829 /* QuestionView.swift in Sources */,
 				C31EEF9B2ADDEB4C004DA615 /* SignInView.swift in Sources */,

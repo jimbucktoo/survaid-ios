@@ -94,15 +94,6 @@ struct SurveysView: View {
                                                 Spacer()
                                                 Text("\(timeDifference)").foregroundColor(.survaidOrange).fontWeight(.bold).padding(.trailing, 10).padding(.bottom, 10)
                                             }.padding(.top, 20)
-                                            HStack {
-                                                Image(systemName: "person.fill").foregroundColor(.black).padding(.leading, 10).padding(.bottom, 10)
-                                                Text("\(survey.email)").foregroundColor(.black)
-                                                    .lineLimit(1)
-                                                    .truncationMode(.tail)
-                                                    .padding(.bottom, 10)
-                                                Spacer()
-                                                Text("Price: $\(survey.price)").foregroundColor(.black).padding(.trailing, 10).padding(.bottom, 10)
-                                            }
                                             ZStack {
                                                 AsyncImage(url: URL(string: "\(survey.surveyImage)")) { phase in
                                                     switch phase {
@@ -121,12 +112,14 @@ struct SurveysView: View {
                                                 }
                                             }.clipped()
                                             HStack {
-                                                Image(systemName: "text.bubble.fill").foregroundColor(.black).padding(.leading, 10).padding(.top, 10)
-                                                Text("Comments").foregroundColor(.black).padding(.top, 10)
+                                                Image(systemName: "person.fill").foregroundColor(.black).padding(.leading, 10).padding(.bottom, 10)
+                                                Text("\(survey.email)").foregroundColor(.black)
+                                                    .lineLimit(1)
+                                                    .truncationMode(.tail)
+                                                    .padding(.bottom, 10)
                                                 Spacer()
-                                                Image(systemName: "person.2.fill").foregroundColor(.black).padding(.leading, 10).padding(.top, 10)
-                                                Text("Participants").foregroundColor(.black).padding(.trailing, 10).padding(.top, 10)
-                                            }.padding(.bottom, 20)
+                                                Text("Price: $\(survey.price)").foregroundColor(.black).padding(.trailing, 10).padding(.bottom, 10)
+                                            }.padding(.top, 10).padding(.bottom, 10)
                                         }
                                         .frame(maxWidth: .infinity, maxHeight: 320).overlay(
                                             RoundedRectangle(cornerRadius: 10)

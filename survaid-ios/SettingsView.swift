@@ -15,20 +15,20 @@ struct SettingsView: View {
     
     var body: some View {
         NavigationStack {
-            ScrollView {
-                HStack {
-                    Image(systemName: "gearshape.fill")
-                        .font(.system(size: 40))
-                        .foregroundColor(.survaidBlue)
-                    Text("Settings")
-                        .font(.title)
-                        .fontWeight(.bold)
-                        .foregroundColor(.survaidBlue)
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.top, 20)
-                .padding(.horizontal, 20)
-                VStack {
+            HStack {
+                Image(systemName: "gearshape.fill")
+                    .font(.system(size: 40))
+                    .foregroundColor(.survaidBlue)
+                Text("Settings")
+                    .font(.title)
+                    .fontWeight(.bold)
+                    .foregroundColor(.survaidBlue)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.top, 20)
+            .padding(.horizontal, 20)
+            VStack {
+                ScrollView {
                     Divider().background(Color.white)
                     NavigationLink(destination: ChangeProfilePictureView()) {
                         HStack {
@@ -64,8 +64,8 @@ struct SettingsView: View {
                     .padding(.vertical, 20)
                     .padding(.horizontal, 20)
                 }
-            }.background(Color.black)
-        }
+            }
+        }.background(Color.black)
     }
 }
 
