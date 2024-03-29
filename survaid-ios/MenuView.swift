@@ -14,21 +14,12 @@ struct MenuView: View {
                 .toolbar(.visible, for: .tabBar)
                 .toolbarBackground(Color.black, for: .tabBar)
             
-            MessagesView()
-                .tabItem {
-                    Image(systemName: "message")
-                    Text("Messages")
-                }
-                .tag(1)
-                .toolbar(.visible, for: .tabBar)
-                .toolbarBackground(Color.black, for: .tabBar)
-            
             ProfileView()
                 .tabItem {
                     Image(systemName: "person")
                     Text("Profile")
                 }
-                .tag(2)
+                .tag(1)
                 .toolbar(.visible, for: .tabBar)
                 .toolbarBackground(Color.black, for: .tabBar)
             
@@ -37,7 +28,7 @@ struct MenuView: View {
                     Image(systemName: "gearshape")
                     Text("Settings")
                 }
-                .tag(3)
+                .tag(2)
                 .toolbar(.visible, for: .tabBar)
                 .toolbarBackground(Color.black, for: .tabBar)
         }

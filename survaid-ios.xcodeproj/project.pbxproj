@@ -14,7 +14,6 @@
 		C31EEFAA2ADDEB4E004DA615 /* survaid_iosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C31EEFA92ADDEB4E004DA615 /* survaid_iosTests.swift */; };
 		C31EEFB42ADDEB4E004DA615 /* survaid_iosUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C31EEFB32ADDEB4E004DA615 /* survaid_iosUITests.swift */; };
 		C31EEFB62ADDEB4E004DA615 /* survaid_iosUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C31EEFB52ADDEB4E004DA615 /* survaid_iosUITestsLaunchTests.swift */; };
-		C31EEFCD2ADDF410004DA615 /* MessagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C31EEFCC2ADDF410004DA615 /* MessagesView.swift */; };
 		C31EEFCF2ADDF41F004DA615 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C31EEFCE2ADDF41F004DA615 /* ProfileView.swift */; };
 		C31EEFD12ADDF42F004DA615 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C31EEFD02ADDF42F004DA615 /* SettingsView.swift */; };
 		C31EEFD32ADDF4FD004DA615 /* SurveysView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C31EEFD22ADDF4FD004DA615 /* SurveysView.swift */; };
@@ -37,8 +36,6 @@
 		C3E8A6CF2B3A4335007D1C66 /* ParticipantInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3E8A6CE2B3A4335007D1C66 /* ParticipantInformationView.swift */; };
 		C3E8A6D12B3A4346007D1C66 /* CompletedSurveysView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3E8A6D02B3A4346007D1C66 /* CompletedSurveysView.swift */; };
 		C3E8A6D32B3A4352007D1C66 /* ReviewsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3E8A6D22B3A4352007D1C66 /* ReviewsView.swift */; };
-		C3E8A6D72B3CB333007D1C66 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3E8A6D62B3CB333007D1C66 /* MessageView.swift */; };
-		C3F880342B3E51C100809A02 /* NewMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F880332B3E51C100809A02 /* NewMessageView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,7 +66,6 @@
 		C31EEFAF2ADDEB4E004DA615 /* survaid-iosUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "survaid-iosUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C31EEFB32ADDEB4E004DA615 /* survaid_iosUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = survaid_iosUITests.swift; sourceTree = "<group>"; };
 		C31EEFB52ADDEB4E004DA615 /* survaid_iosUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = survaid_iosUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		C31EEFCC2ADDF410004DA615 /* MessagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesView.swift; sourceTree = "<group>"; };
 		C31EEFCE2ADDF41F004DA615 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		C31EEFD02ADDF42F004DA615 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		C31EEFD22ADDF4FD004DA615 /* SurveysView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveysView.swift; sourceTree = "<group>"; };
@@ -86,8 +82,6 @@
 		C3E8A6CE2B3A4335007D1C66 /* ParticipantInformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantInformationView.swift; sourceTree = "<group>"; };
 		C3E8A6D02B3A4346007D1C66 /* CompletedSurveysView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedSurveysView.swift; sourceTree = "<group>"; };
 		C3E8A6D22B3A4352007D1C66 /* ReviewsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewsView.swift; sourceTree = "<group>"; };
-		C3E8A6D62B3CB333007D1C66 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
-		C3F880332B3E51C100809A02 /* NewMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,9 +144,6 @@
 				C31EEFD22ADDF4FD004DA615 /* SurveysView.swift */,
 				C3E8A6CA2B3A15F0007D1C66 /* SurveyView.swift */,
 				C3545E572AF4095C00221106 /* MenuView.swift */,
-				C31EEFCC2ADDF410004DA615 /* MessagesView.swift */,
-				C3E8A6D62B3CB333007D1C66 /* MessageView.swift */,
-				C3F880332B3E51C100809A02 /* NewMessageView.swift */,
 				C31EEFCE2ADDF41F004DA615 /* ProfileView.swift */,
 				C3E8A6CE2B3A4335007D1C66 /* ParticipantInformationView.swift */,
 				C3E8A6CC2B3A4075007D1C66 /* ActiveSurveysView.swift */,
@@ -342,17 +333,14 @@
 				C335D55D2B040DB9008C611D /* CardView.swift in Sources */,
 				C3E8A6CF2B3A4335007D1C66 /* ParticipantInformationView.swift in Sources */,
 				C31EEFD32ADDF4FD004DA615 /* SurveysView.swift in Sources */,
-				C31EEFCD2ADDF410004DA615 /* MessagesView.swift in Sources */,
 				C3260D742BA9FF16002E5EEB /* ChangeProfilePicture.swift in Sources */,
 				C3E8A6CD2B3A4075007D1C66 /* ActiveSurveysView.swift in Sources */,
 				C31EEFCF2ADDF41F004DA615 /* ProfileView.swift in Sources */,
 				C31EEFD12ADDF42F004DA615 /* SettingsView.swift in Sources */,
 				C3E8A6D12B3A4346007D1C66 /* CompletedSurveysView.swift in Sources */,
-				C3F880342B3E51C100809A02 /* NewMessageView.swift in Sources */,
 				C335D55B2B04019C008C611D /* Color.swift in Sources */,
 				C3E8A6D32B3A4352007D1C66 /* ReviewsView.swift in Sources */,
 				C3260D762BA9FF48002E5EEB /* EditParticipantInformationView.swift in Sources */,
-				C3E8A6D72B3CB333007D1C66 /* MessageView.swift in Sources */,
 				C38C5ACE2B50A09D00DCB829 /* QuestionView.swift in Sources */,
 				C31EEF9B2ADDEB4C004DA615 /* SignInView.swift in Sources */,
 				C3E8A6CB2B3A15F0007D1C66 /* SurveyView.swift in Sources */,
