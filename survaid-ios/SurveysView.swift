@@ -16,18 +16,18 @@ struct SurveysView: View {
         let timeDifferenceMinutes = Int(currentTime - timestamp) / 60000
         
         if timeDifferenceMinutes < 60 {
-            return "\(timeDifferenceMinutes) m"
+            return "\(timeDifferenceMinutes)m"
         } else if timeDifferenceMinutes < 1440 {
             let hours = timeDifferenceMinutes / 60
             let remainingMinutes = timeDifferenceMinutes % 60
             if remainingMinutes == 0 {
-                return "\(hours) hr"
+                return "\(hours)hr"
             } else {
-                return "\(hours) hr \(remainingMinutes) m"
+                return "\(hours)hr \(remainingMinutes)m"
             }
         } else {
             let days = timeDifferenceMinutes / 1440
-            return "\(days) d"
+            return "\(days)d"
         }
     }
     
