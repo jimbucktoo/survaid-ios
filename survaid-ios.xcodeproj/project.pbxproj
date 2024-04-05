@@ -30,6 +30,7 @@
 		C38C5ADB2B50EAF700DCB829 /* FirebaseDatabaseSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C38C5ADA2B50EAF700DCB829 /* FirebaseDatabaseSwift */; };
 		C38C5ADD2B50EAF700DCB829 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = C38C5ADC2B50EAF700DCB829 /* FirebaseStorage */; };
 		C3C7C7A82B8548ED00ECC913 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C7C7A72B8548ED00ECC913 /* SignUpView.swift */; };
+		C3DDD7982BBF779B006E13B3 /* UserSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DDD7972BBF779B006E13B3 /* UserSession.swift */; };
 		C3E8A6CB2B3A15F0007D1C66 /* SurveyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3E8A6CA2B3A15F0007D1C66 /* SurveyView.swift */; };
 		C3E8A6CD2B3A4075007D1C66 /* ActiveSurveysView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3E8A6CC2B3A4075007D1C66 /* ActiveSurveysView.swift */; };
 		C3E8A6CF2B3A4335007D1C66 /* ParticipantInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3E8A6CE2B3A4335007D1C66 /* ParticipantInformationView.swift */; };
@@ -74,6 +75,7 @@
 		C372810C2B50F15B0091349F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C38C5ACD2B50A09D00DCB829 /* QuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionView.swift; sourceTree = "<group>"; };
 		C3C7C7A72B8548ED00ECC913 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
+		C3DDD7972BBF779B006E13B3 /* UserSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSession.swift; sourceTree = "<group>"; };
 		C3E8A6CA2B3A15F0007D1C66 /* SurveyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyView.swift; sourceTree = "<group>"; };
 		C3E8A6CC2B3A4075007D1C66 /* ActiveSurveysView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveSurveysView.swift; sourceTree = "<group>"; };
 		C3E8A6CE2B3A4335007D1C66 /* ParticipantInformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantInformationView.swift; sourceTree = "<group>"; };
@@ -152,6 +154,7 @@
 				C372810C2B50F15B0091349F /* GoogleService-Info.plist */,
 				C31EEF9C2ADDEB4D004DA615 /* Assets.xcassets */,
 				C31EEF9E2ADDEB4D004DA615 /* Preview Content */,
+				C3DDD7972BBF779B006E13B3 /* UserSession.swift */,
 			);
 			path = "survaid-ios";
 			sourceTree = "<group>";
@@ -338,6 +341,7 @@
 				C3E8A6CB2B3A15F0007D1C66 /* SurveyView.swift in Sources */,
 				C3C7C7A82B8548ED00ECC913 /* SignUpView.swift in Sources */,
 				C31EEF992ADDEB4C004DA615 /* survaid_iosApp.swift in Sources */,
+				C3DDD7982BBF779B006E13B3 /* UserSession.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -4,7 +4,7 @@ import FirebaseAuth
 struct SignInView: View {
     @State private var email = ""
     @State private var password = ""
-    @State private var signInSuccess = false
+    @EnvironmentObject var userSession: UserSession
     
     func signIn() {
         Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
@@ -13,12 +13,14 @@ struct SignInView: View {
                 return
             }
             print(authResult ?? "AuthResult")
-            signInSuccess = true
+            userSession.signedIn = true
+            email = ""
+            password = ""
         }
     }
     
     var body: some View {
-        if (signInSuccess) {
+        if (userSession.signedIn) {
             MenuView()
         } else {
             ZStack {
@@ -54,5 +56,5 @@ struct SignInView: View {
 }
 
 #Preview {
-    SignInView()
+    SignInView().environmentObject(UserSession())
 }

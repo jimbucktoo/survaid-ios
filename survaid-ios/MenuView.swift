@@ -42,5 +42,5 @@ struct MenuView: View {
 }
 
 #Preview {
-    MenuView()
+    MenuView().environmentObject(UserSession())
 }
