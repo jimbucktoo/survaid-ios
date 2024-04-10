@@ -41,11 +41,13 @@ struct ProfileView: View {
                 .padding(.horizontal, 20)
                 VStack(spacing: 0) {
                     VStack {
-                        if let userProfile = userProfile {
-                            AsyncImage(url: URL(string: "\(userProfile["profilePicture"] ?? "")")) { phase in
+                        if let profileData = userProfile {
+                            AsyncImage(url: URL(string: "\(profileData["profilePicture"] ?? "")")) { phase in
                                 switch phase {
                                 case .empty:
-                                    ProgressView()
+                                    Image(systemName: "person.circle.fill")
+                                        .font(.system(size: 100))
+                                        .foregroundColor(.survaidBlue)
                                 case .success(let image):
                                     image
                                         .resizable()
@@ -59,10 +61,6 @@ struct ProfileView: View {
                                     EmptyView()
                                 }
                             }
-                        } else {
-                            Image(systemName: "person.circle.fill")
-                                .font(.system(size: 100))
-                                .foregroundColor(.survaidBlue)
                         }
                         Text("\(userProfile?["firstName"] ?? "") \(userProfile?["lastName"] ?? "")")
                             .foregroundColor(.white)
