@@ -41,12 +41,29 @@ struct ProfileView: View {
                 .padding(.horizontal, 20)
                 VStack(spacing: 0) {
                     VStack {
-                        Image("jamesliang")
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(width: 100, height: 100)
-                            .clipShape(Circle())
-                            .overlay(Circle().stroke(Color.black, lineWidth: 2))
+                        if let userProfile = userProfile {
+                            AsyncImage(url: URL(string: "\(userProfile["profilePicture"] ?? "")")) { phase in
+                                switch phase {
+                                case .empty:
+                                    ProgressView()
+                                case .success(let image):
+                                    image
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fill)
+                                        .frame(width: 100, height: 100)
+                                        .clipShape(Circle())
+                                        .overlay(Circle().stroke(Color.black, lineWidth: 2))
+                                case .failure(let error):
+                                    Text("Failed to load image: \(error.localizedDescription)")
+                                @unknown default:
+                                    EmptyView()
+                                }
+                            }
+                        } else {
+                            Image(systemName: "person.circle.fill")
+                                .font(.system(size: 100))
+                                .foregroundColor(.survaidBlue)
+                        }
                         Text("\(userProfile?["firstName"] ?? "") \(userProfile?["lastName"] ?? "")")
                             .foregroundColor(.white)
                             .fontWeight(.bold)

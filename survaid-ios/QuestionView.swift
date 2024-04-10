@@ -385,7 +385,7 @@ struct QuestionView: View {
                                     .clipShape(Circle())
                             }
                             .sheet(isPresented: $isImagePickerPresented, onDismiss: loadImage) {
-                                ImagePicker(selectedImage: $selectedImage)
+                                ImagePicker(selectedImage: $selectedImage, sourceType: .camera)
                             }
                         }
                     default:
@@ -452,6 +452,7 @@ struct SurveyQuestion {
 
 struct ImagePicker: UIViewControllerRepresentable {
     @Binding var selectedImage: UIImage?
+    let sourceType: UIImagePickerController.SourceType
     
     class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
         var parent: ImagePicker
@@ -479,7 +480,7 @@ struct ImagePicker: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> UIImagePickerController {
         let picker = UIImagePickerController()
         picker.delegate = context.coordinator
-        picker.sourceType = .camera
+        picker.sourceType = sourceType
         picker.allowsEditing = false
         return picker
     }
