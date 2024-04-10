@@ -137,13 +137,7 @@ struct SurveyView: View {
                             Spacer()
                             Text("Price: $\(survey["price"] as? String ?? "")").foregroundColor(.black).padding(.trailing, 10).padding(.top, 10)
                         }
-                        HStack {
-                            Image(systemName: "text.bubble.fill").foregroundColor(.black).padding(.leading, 10).padding(.top, 10)
-                            Text("Comments").foregroundColor(.black).padding(.top, 10)
-                            Spacer()
-                            Image(systemName: "person.2.fill").foregroundColor(.black).padding(.leading, 10).padding(.top, 10)
-                            Text("Participants").foregroundColor(.black).padding(.trailing, 10).padding(.top, 10)
-                        }
+                        Spacer()
                         VStack {
                             HStack {
                                 Text(survey["title"] as? String ?? "")
