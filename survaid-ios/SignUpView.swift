@@ -6,6 +6,7 @@ import FirebaseDatabaseSwift
 struct SignUpView: View {
     @State private var ref = Database.database().reference()
     @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject var userSession: UserSession
     @State private var firstName = ""
     @State private var lastName = ""
     @State private var email = ""
@@ -19,7 +20,16 @@ struct SignUpView: View {
                 userUID = authResult.user.uid
                 print("User UID: \(userUID)")
                 ref.child("users").child(userUID).setValue(["email": email, "firstName": firstName, "lastName": lastName, "role": "Participant"])
-                signUpSuccess = true
+                
+                Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
+                    if let error = error {
+                        print("Error signing in user: \(error.localizedDescription)")
+                    } else {
+                        userSession.signedIn = true
+                        signUpSuccess = true
+                        print("User signed in after registration")
+                    }
+                }
             } else if let error = error {
                 print("Error creating user: \(error.localizedDescription)")
             }
