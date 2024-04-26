@@ -4,11 +4,6 @@ import FirebaseDatabase
 import FirebaseDatabaseSwift
 import FirebaseStorage
 
-enum DragState {
-    case inactive
-    case dragging(translation: CGSize)
-}
-
 struct ChangeProfilePictureView: View {
     let user = Auth.auth().currentUser
     private var dbRef = Database.database().reference()
