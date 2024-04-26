@@ -5,11 +5,11 @@ import FirebaseDatabaseSwift
 import FirebaseStorage
 
 struct SurveysView: View {
-    @State var surveysData: [Survey] = []
-    @State var isLoading: Bool = true
-    
     private var ref = Database.database().reference()
     private var storageRef = Storage.storage().reference()
+    
+    @State var surveysData: [Survey] = []
+    @State var isLoading: Bool = true
     
     func calculateTimeDifference(for timestamp: TimeInterval) -> String {
         let currentTime = Date().timeIntervalSince1970 * 1000

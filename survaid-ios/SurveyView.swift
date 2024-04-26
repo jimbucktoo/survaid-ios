@@ -7,10 +7,12 @@ struct SurveyView: View {
     private var ref = Database.database().reference()
     let surveyId: String?
     let user = Auth.auth().currentUser
-    @Environment(\.dismiss) private var dismiss
+    
+    @State private var dragState = DragState.inactive
     @State private var surveyData: [String: Any]?
     @State private var status: String = "Not Started"
     @State private var blackImage: String = "https://firebasestorage.googleapis.com/v0/b/survaidapp-583db.appspot.com/o/black.jpg?alt=media&token=465f411a-ff69-4577-bd37-f1f539f39003"
+    @Environment(\.dismiss) private var dismiss
     
     init(surveyId: String? = nil) {
         self.surveyId = surveyId
@@ -81,6 +83,16 @@ struct SurveyView: View {
                 print("Status updated successfully")
             }
         }
+    }
+    
+    private func onDragChanged(drag: DragGesture.Value) {
+        if drag.translation.width > 100 {
+            dismiss()
+        }
+    }
+    
+    private func onDragEnded(drag: DragGesture.Value) {
+        self.dragState = .inactive
     }
     
     var body: some View {
@@ -181,6 +193,11 @@ struct SurveyView: View {
             loadSurvey()
             loadStatus()
         }
+        .gesture(
+            DragGesture()
+                .onChanged(onDragChanged)
+                .onEnded(onDragEnded)
+        )
     }
 }
 

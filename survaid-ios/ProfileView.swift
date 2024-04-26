@@ -8,6 +8,7 @@ struct ProfileView: View {
     let user = Auth.auth().currentUser
     private var dbRef = Database.database().reference()
     private var storageRef = Storage.storage().reference()
+    
     @State private var userProfile: [String: Any]?
     @State private var index = 0
     

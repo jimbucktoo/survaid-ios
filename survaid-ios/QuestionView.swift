@@ -9,9 +9,9 @@ import FirebaseStorage
 struct QuestionView: View {
     private var dbRef = Database.database().reference()
     private var storageRef = Storage.storage().reference()
-    @State private var isLoading = true
-    @Environment(\.dismiss) private var dismiss
+    let surveyId: String?
     
+    @State private var isLoading = true
     @State private var textValue = ""
     @State private var sliderValue = 5.0
     @State private var minInput = 1.0
@@ -30,12 +30,12 @@ struct QuestionView: View {
     @State private var imageURL: URL?
     @State private var selectedImage: UIImage?
     @State private var isImagePickerPresented = false
-    
-    let surveyId: String?
     @State private var questionIndex = 0
     @State private var selectedQuestionType: String = ""
     @State private var surveyQuestions: [SurveyQuestion] = []
     @State private var answers: [Any] = []
+    @State private var dragState = DragState.inactive
+    @Environment(\.dismiss) private var dismiss
     
     init(surveyId: String? = nil) {
         self.surveyId = surveyId
@@ -286,157 +286,174 @@ struct QuestionView: View {
         }
     }
     
+    private func onDragChanged(drag: DragGesture.Value) {
+        if drag.translation.width > 100 {
+            dismiss()
+        }
+    }
+    
+    private func onDragEnded(drag: DragGesture.Value) {
+        self.dragState = .inactive
+    }
+    
     var body: some View {
-        ZStack {
-            if isLoading {
-                Color.black.ignoresSafeArea()
-                ProgressView()
-                    .progressViewStyle(CircularProgressViewStyle())
-                    .scaleEffect(2.0)
-            } else {
-                Color.black.ignoresSafeArea()
-                VStack {
-                    Spacer()
-                    Text(currentQuestion.title)
-                        .font(.title)
-                        .foregroundColor(.white)
-                        .multilineTextAlignment(.center)
-                        .padding([.leading, .trailing], 20)
-                    Text(currentQuestion.description)
-                        .font(.system(size: 20))
-                        .foregroundColor(.white)
-                        .padding(.top, 10)
-                        .padding([.leading, .trailing], 20)
-                    Spacer()
-                    switch selectedQuestionType {
-                    case "Text":
-                        TextField("",
-                                  text: $textValue,
-                                  prompt: Text("Write a Response...")
-                            .foregroundColor(.black)
-                        ).frame(width: 300, height: 50, alignment: .center).background(Color.white).cornerRadius(10).multilineTextAlignment(.center).foregroundColor(.black)
-                        
-                    case "Slider":
-                        Text("Slider Value: \(Int(sliderValue))")
-                            .foregroundColor(.white)
-                        Slider(value: $sliderValue, in: minInput...maxInput, step: interval)
-                            .padding([.leading, .trailing], 20)
-                        
-                    case "Multiple Choice":
-                        Picker(selection: $pickerValue, label: Text("Multiple Choice")) {
-                            ForEach(options, id: \.self) { option in
-                                Text("\(option)").foregroundColor(Color.white)
-                            }
-                        }
-                        .pickerStyle(WheelPickerStyle())
-                        
-                    case "Microphone":
-                        VStack {
-                            Text(String(format: "%.1f Seconds", recordingDuration))
-                                .font(.title)
-                                .foregroundColor(.white)
-                                .padding(.top, 10)
-                            HStack {
-                                Spacer()
-                                Button(action: {
-                                    if isRecording {
-                                        stopRecording()
-                                    } else {
-                                        startRecording()
-                                    }
-                                }) {
-                                    Image(systemName: isRecording ? "stop.circle.fill" : "circle.fill")
-                                        .font(.system(size: 70))
-                                        .foregroundColor(.red)
-                                        .padding(1)
-                                        .background(Color.white)
-                                        .clipShape(Circle())
-                                }
-                                Button(action: {
-                                    playRecording()
-                                }) {
-                                    Image(systemName: "play.circle.fill")
-                                        .font(.system(size: 70))
-                                        .foregroundColor(.blue)
-                                        .padding(1)
-                                        .background(Color.white)
-                                        .clipShape(Circle())
-                                }
-                                Spacer()
-                            }
-                        }
-                        
-                    case "Camera":
-                        if let selectedImage = selectedImage {
-                            Image(uiImage: selectedImage)
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 300, height: 300)
-                                .clipShape(RoundedRectangle(cornerRadius: 10))
-                        } else {
-                            Button(action: {
-                                isImagePickerPresented.toggle()
-                            }) {
-                                Image(systemName: "camera.circle.fill")
-                                    .font(.system(size: 70))
-                                    .foregroundColor(.white)
-                                    .padding(1)
-                                    .background(Color.blue)
-                                    .clipShape(Circle())
-                            }
-                            .sheet(isPresented: $isImagePickerPresented, onDismiss: loadImage) {
-                                ImagePicker(selectedImage: $selectedImage, sourceType: .camera)
-                            }
-                        }
-                    default:
-                        Spacer()
-                    }
-                    Spacer()
+        NavigationStack {
+            ZStack {
+                if isLoading {
+                    Color.black.ignoresSafeArea()
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle())
+                        .scaleEffect(2.0)
+                } else {
+                    Color.black.ignoresSafeArea()
                     VStack {
-                        if questionIndex != 0 {
+                        Spacer()
+                        Text(currentQuestion.title)
+                            .font(.title)
+                            .foregroundColor(.white)
+                            .multilineTextAlignment(.center)
+                            .padding([.leading, .trailing], 20)
+                        Text(currentQuestion.description)
+                            .font(.system(size: 20))
+                            .foregroundColor(.white)
+                            .padding(.top, 10)
+                            .padding([.leading, .trailing], 20)
+                        Spacer()
+                        switch selectedQuestionType {
+                        case "Text":
+                            TextField("",
+                                      text: $textValue,
+                                      prompt: Text("Write a Response...")
+                                .foregroundColor(.black)
+                            ).frame(width: 300, height: 50, alignment: .center).background(Color.white).cornerRadius(10).multilineTextAlignment(.center).foregroundColor(.black)
+                            
+                        case "Slider":
+                            Text("Slider Value: \(Int(sliderValue))")
+                                .foregroundColor(.white)
+                            Slider(value: $sliderValue, in: minInput...maxInput, step: interval)
+                                .padding([.leading, .trailing], 20)
+                            
+                        case "Multiple Choice":
+                            Picker(selection: $pickerValue, label: Text("Multiple Choice")) {
+                                ForEach(options, id: \.self) { option in
+                                    Text("\(option)").foregroundColor(Color.white)
+                                }
+                            }
+                            .pickerStyle(WheelPickerStyle())
+                            
+                        case "Microphone":
+                            VStack {
+                                Text(String(format: "%.1f Seconds", recordingDuration))
+                                    .font(.title)
+                                    .foregroundColor(.white)
+                                    .padding(.top, 10)
+                                HStack {
+                                    Spacer()
+                                    Button(action: {
+                                        if isRecording {
+                                            stopRecording()
+                                        } else {
+                                            startRecording()
+                                        }
+                                    }) {
+                                        Image(systemName: isRecording ? "stop.circle.fill" : "circle.fill")
+                                            .font(.system(size: 70))
+                                            .foregroundColor(.red)
+                                            .padding(1)
+                                            .background(Color.white)
+                                            .clipShape(Circle())
+                                    }
+                                    Button(action: {
+                                        playRecording()
+                                    }) {
+                                        Image(systemName: "play.circle.fill")
+                                            .font(.system(size: 70))
+                                            .foregroundColor(.blue)
+                                            .padding(1)
+                                            .background(Color.white)
+                                            .clipShape(Circle())
+                                    }
+                                    Spacer()
+                                }
+                            }
+                            
+                        case "Camera":
+                            if let selectedImage = selectedImage {
+                                Image(uiImage: selectedImage)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 300, height: 300)
+                                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                            } else {
+                                Button(action: {
+                                    isImagePickerPresented.toggle()
+                                }) {
+                                    Image(systemName: "camera.circle.fill")
+                                        .font(.system(size: 70))
+                                        .foregroundColor(.white)
+                                        .padding(1)
+                                        .background(Color.blue)
+                                        .clipShape(Circle())
+                                }
+                                .sheet(isPresented: $isImagePickerPresented, onDismiss: loadImage) {
+                                    ImagePicker(selectedImage: $selectedImage, sourceType: .camera)
+                                }
+                            }
+                        default:
+                            Spacer()
+                        }
+                        Spacer()
+                        VStack {
+                            if questionIndex != 0 {
+                                Button(action: {
+                                    previousQuestion()
+                                }) {
+                                    Text("Previous Question")
+                                        .padding(20)
+                                        .background(Color.survaidOrange)
+                                        .foregroundColor(.white)
+                                        .cornerRadius(10)
+                                        .padding(0)
+                                }
+                            }
                             Button(action: {
-                                previousQuestion()
+                                if questionIndex == surveyQuestions.count - 1 {
+                                    handleSubmit()
+                                } else {
+                                    nextQuestion()
+                                }
                             }) {
-                                Text("Previous Question")
+                                Text(questionIndex == surveyQuestions.count - 1 ? "Submit Survey" : "Next Question")
                                     .padding(20)
-                                    .background(Color.survaidOrange)
+                                    .background(Color.survaidBlue)
                                     .foregroundColor(.white)
                                     .cornerRadius(10)
                                     .padding(0)
                             }
                         }
-                        Button(action: {
-                            if questionIndex == surveyQuestions.count - 1 {
-                                handleSubmit()
-                            } else {
-                                nextQuestion()
-                            }
-                        }) {
-                            Text(questionIndex == surveyQuestions.count - 1 ? "Submit Survey" : "Next Question")
-                                .padding(20)
-                                .background(Color.survaidBlue)
-                                .foregroundColor(.white)
-                                .cornerRadius(10)
-                                .padding(0)
-                        }
+                        Spacer()
                     }
-                    Spacer()
                 }
             }
-        }
-        .navigationBarTitle("", displayMode: .inline)
-        .navigationBarBackButtonHidden(true)
-        .navigationBarItems(leading: Button(action: {
-            dismiss()
-        }) {
-            HStack {
-                Image(systemName: "chevron.left")
-                Text("Survey")
+            .navigationBarTitle("", displayMode: .inline)
+            .navigationBarBackButtonHidden(true)
+            .navigationBarItems(leading: Button(action: {
+                dismiss()
+            }) {
+                HStack {
+                    Image(systemName: "chevron.left")
+                    Text("Survey")
+                }
             }
-        }
-        )
-        .onAppear {
-            readValue()
+            )
+            .onAppear {
+                readValue()
+            }
+            .gesture(
+                DragGesture()
+                    .onChanged(onDragChanged)
+                    .onEnded(onDragEnded)
+            )
         }
     }
     

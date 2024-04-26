@@ -5,14 +5,14 @@ import FirebaseDatabaseSwift
 
 struct SignUpView: View {
     @State private var ref = Database.database().reference()
-    @Environment(\.dismiss) private var dismiss
-    @EnvironmentObject var userSession: UserSession
     @State private var firstName = ""
     @State private var lastName = ""
     @State private var email = ""
     @State private var password = ""
     @State private var signUpSuccess = false
     @State private var userUID: String = ""
+    @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject var userSession: UserSession
     
     func signUpUser() {
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in

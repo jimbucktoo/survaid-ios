@@ -4,6 +4,11 @@ import FirebaseDatabase
 import FirebaseDatabaseSwift
 import FirebaseStorage
 
+enum DragState {
+    case inactive
+    case dragging(translation: CGSize)
+}
+
 struct ChangeProfilePictureView: View {
     let user = Auth.auth().currentUser
     private var dbRef = Database.database().reference()
@@ -13,6 +18,7 @@ struct ChangeProfilePictureView: View {
     @State private var isImagePickerPresented = false
     @State private var imageURL: URL?
     @State private var userProfile: [String: Any]?
+    @State private var dragState = DragState.inactive
     @Environment(\.dismiss) private var dismiss
     
     func uploadImage(image: UIImage) {
@@ -61,95 +67,116 @@ struct ChangeProfilePictureView: View {
         })
     }
     
+    private func onDragChanged(drag: DragGesture.Value) {
+        if drag.translation.width > 100 {
+            dismiss()
+        }
+    }
+    
+    private func onDragEnded(drag: DragGesture.Value) {
+        self.dragState = .inactive
+    }
+    
     var body: some View {
-        ScrollView {
-            VStack(spacing: 20) {
-                Spacer()
-                Text("Change Profile Picture")
-                    .font(.title)
-                    .fontWeight(.bold)
-                    .foregroundColor(.survaidBlue)
-                    .multilineTextAlignment(.center)
-                Spacer()
-                if let profileData = userProfile {
-                    AsyncImage(url: URL(string: "\(profileData["profilePicture"] ?? "")")) { phase in
-                        switch phase {
-                        case .empty:
-                            Image(systemName: "person.circle.fill")
-                                .font(.system(size: 100))
-                                .foregroundColor(.survaidBlue)
-                        case .success(let image):
-                            image
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .frame(width: 200, height: 200)
-                                .clipShape(Circle())
-                                .overlay(Circle().stroke(Color.black, lineWidth: 2))
-                        case .failure(let error):
-                            Text("Failed to load image: \(error.localizedDescription)")
-                        @unknown default:
-                            EmptyView()
+        NavigationStack {
+            ScrollView {
+                VStack(spacing: 20) {
+                    Spacer()
+                    Text("Change Profile Picture")
+                        .font(.title)
+                        .fontWeight(.bold)
+                        .foregroundColor(.blue)
+                        .multilineTextAlignment(.center)
+                    Spacer()
+                    if let profileData = userProfile {
+                        AsyncImage(url: URL(string: "\(profileData["profilePicture"] ?? "")")) { phase in
+                            switch phase {
+                            case .empty:
+                                Image(systemName: "person.circle.fill")
+                                    .font(.system(size: 100))
+                                    .foregroundColor(.blue)
+                            case .success(let image):
+                                image
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: 200, height: 200)
+                                    .clipShape(Circle())
+                                    .overlay(Circle().stroke(Color.black, lineWidth: 2))
+                            case .failure(let error):
+                                Text("Failed to load image: \(error.localizedDescription)")
+                            @unknown default:
+                                EmptyView()
+                            }
                         }
                     }
-                }
-                Spacer()
-                Text("Please choose an image to upload as your profile picture").foregroundColor(.white).font(.system(size: 20)).padding([.leading, .trailing], 10).multilineTextAlignment(.center)
-                Spacer()
-                HStack {
-                    if let selectedImage = selectedImage {
-                        Image(uiImage: selectedImage)
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 300, height: 300)
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
-                    } else {
-                        Button(action: {
-                            isImagePickerPresented.toggle()
-                        }) {
-                            Text("Choose an Image")
-                                .padding(20)
-                                .background(Color.survaidOrange)
-                                .foregroundColor(.white)
-                                .cornerRadius(10)
-                        }
-                        .sheet(isPresented: $isImagePickerPresented, onDismiss: nil) {
-                            ImagePicker(selectedImage: $selectedImage, sourceType: .photoLibrary)
-                        }
-                    }
-                }
-                Button(action: {
-                    if let selectedImage = selectedImage {
-                        uploadImage(image: selectedImage)
-                    } else {
-                        self.imageURL = nil
-                    }
-                }) {
-                    Text("Save")
-                        .padding(20)
-                        .background(Color.survaidBlue)
+                    Spacer()
+                    Text("Please choose an image to upload as your profile picture")
                         .foregroundColor(.white)
-                        .cornerRadius(10)
+                        .font(.system(size: 20))
+                        .padding([.leading, .trailing], 10)
+                        .multilineTextAlignment(.center)
+                    Spacer()
+                    HStack {
+                        if let selectedImage = selectedImage {
+                            Image(uiImage: selectedImage)
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 300, height: 300)
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                        } else {
+                            Button(action: {
+                                isImagePickerPresented.toggle()
+                            }) {
+                                Text("Choose an Image")
+                                    .padding(20)
+                                    .background(Color.survaidOrange)
+                                    .foregroundColor(.white)
+                                    .cornerRadius(10)
+                            }
+                            .sheet(isPresented: $isImagePickerPresented, onDismiss: nil) {
+                                ImagePicker(selectedImage: $selectedImage, sourceType: .photoLibrary)
+                            }
+                        }
+                    }
+                    Button(action: {
+                        if let selectedImage = selectedImage {
+                            uploadImage(image: selectedImage)
+                        } else {
+                            self.imageURL = nil
+                        }
+                    }) {
+                        Text("Save")
+                            .padding(20)
+                            .background(Color.blue)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                    }
+                    Spacer()
                 }
-                Spacer()
+                .frame(maxWidth: .infinity, alignment: .center)
+                .padding(.top, 20)
+                .padding(.horizontal, 20)
             }
-            .frame(maxWidth: .infinity, alignment: .center)
-            .padding(.top, 20)
-            .padding(.horizontal, 20)
+            .background(Color.black)
+            .navigationBarTitle("", displayMode: .inline)
+            .navigationBarBackButtonHidden(true)
+            .navigationBarItems(leading: Button(action: {
+                dismiss()
+            }) {
+                HStack {
+                    Image(systemName: "chevron.left")
+                    Text("Settings")
+                }
+            })
+            .gesture(
+                DragGesture()
+                    .onChanged(onDragChanged)
+                    .onEnded(onDragEnded)
+            )
         }
         .onAppear{
             loadProfile()
         }
-        .background(Color.black)
-        .navigationBarTitle("", displayMode: .inline)
-        .navigationBarBackButtonHidden(true)
-        .navigationBarItems(leading: Button(action: {
-            dismiss()
-        }) {
-            HStack {
-                Image(systemName: "chevron.left")
-                Text("Settings")
-            }
-        })
     }
 }
 
