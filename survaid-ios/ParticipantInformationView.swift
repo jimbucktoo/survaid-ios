@@ -62,7 +62,7 @@ struct ParticipantInformationView: View {
                             image
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
-                                .frame(width: 120, height: 120)
+                                .frame(width: 200, height: 200)
                                 .clipShape(Circle())
                                 .overlay(Circle().stroke(Color.black, lineWidth: 2))
                         case .failure(let error):
@@ -74,9 +74,6 @@ struct ParticipantInformationView: View {
                             .foregroundColor(.white)
                             .fontWeight(.bold)
                             .padding(.top, 10)
-                        Text("\(userProfile?["email"] ?? "")")
-                            .foregroundColor(.white)
-                            .padding(.top, 2)
                     }.padding(.top, 40)
                 }
                 if (participantInfo != "") {

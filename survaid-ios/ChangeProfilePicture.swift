@@ -12,6 +12,7 @@ struct ChangeProfilePictureView: View {
     @State private var selectedImage: UIImage?
     @State private var isImagePickerPresented = false
     @State private var imageURL: URL?
+    @State private var userProfile: [String: Any]?
     @Environment(\.dismiss) private var dismiss
     
     func uploadImage(image: UIImage) {
@@ -47,6 +48,19 @@ struct ChangeProfilePictureView: View {
         }
     }
     
+    func loadProfile() {
+        dbRef.child("users").observeSingleEvent(of: .value, with: { snapshot in
+            if let users = snapshot.value as? [String: Any] {
+                for (userId, userData) in users {
+                    if userId == user?.uid {
+                        self.userProfile = userData as? [String: Any]
+                        break
+                    }
+                }
+            }
+        })
+    }
+    
     var body: some View {
         ScrollView {
             VStack(spacing: 20) {
@@ -57,7 +71,29 @@ struct ChangeProfilePictureView: View {
                     .foregroundColor(.survaidBlue)
                     .multilineTextAlignment(.center)
                 Spacer()
-                Text("Please take a picture to upload to your participant profile").foregroundColor(.white).font(.system(size: 20)).padding([.leading, .trailing], 10).multilineTextAlignment(.center)
+                if let profileData = userProfile {
+                    AsyncImage(url: URL(string: "\(profileData["profilePicture"] ?? "")")) { phase in
+                        switch phase {
+                        case .empty:
+                            Image(systemName: "person.circle.fill")
+                                .font(.system(size: 100))
+                                .foregroundColor(.survaidBlue)
+                        case .success(let image):
+                            image
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 200, height: 200)
+                                .clipShape(Circle())
+                                .overlay(Circle().stroke(Color.black, lineWidth: 2))
+                        case .failure(let error):
+                            Text("Failed to load image: \(error.localizedDescription)")
+                        @unknown default:
+                            EmptyView()
+                        }
+                    }
+                }
+                Spacer()
+                Text("Please choose an image to upload as your profile picture").foregroundColor(.white).font(.system(size: 20)).padding([.leading, .trailing], 10).multilineTextAlignment(.center)
                 Spacer()
                 HStack {
                     if let selectedImage = selectedImage {
@@ -70,19 +106,17 @@ struct ChangeProfilePictureView: View {
                         Button(action: {
                             isImagePickerPresented.toggle()
                         }) {
-                            Image(systemName: "photo.fill")
-                                .font(.system(size: 70))
+                            Text("Choose an Image")
+                                .padding(20)
+                                .background(Color.survaidOrange)
                                 .foregroundColor(.white)
-                                .padding(1)
-                                .background(Color.blue)
-                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                                .cornerRadius(10)
                         }
                         .sheet(isPresented: $isImagePickerPresented, onDismiss: nil) {
                             ImagePicker(selectedImage: $selectedImage, sourceType: .photoLibrary)
                         }
                     }
                 }
-                Spacer()
                 Button(action: {
                     if let selectedImage = selectedImage {
                         uploadImage(image: selectedImage)
@@ -101,6 +135,9 @@ struct ChangeProfilePictureView: View {
             .frame(maxWidth: .infinity, alignment: .center)
             .padding(.top, 20)
             .padding(.horizontal, 20)
+        }
+        .onAppear{
+            loadProfile()
         }
         .background(Color.black)
         .navigationBarTitle("", displayMode: .inline)
