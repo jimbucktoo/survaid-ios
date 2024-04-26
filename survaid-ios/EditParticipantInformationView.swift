@@ -16,6 +16,7 @@ struct EditParticipantInformationView: View {
             dbRef.child("users/\(user?.uid ?? "")/participantInformation").setValue(textValue)
         }
         print("Updated Participant Information")
+        dismiss()
     }
     
     var body: some View {

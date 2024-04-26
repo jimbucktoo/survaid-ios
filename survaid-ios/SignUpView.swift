@@ -63,12 +63,12 @@ struct SignUpView: View {
                               text: $email,
                               prompt: Text("Email")
                         .foregroundColor(.black)
-                    ).frame(width: 300, height: 50, alignment: .center).background(Color.white).cornerRadius(10).multilineTextAlignment(.center).foregroundColor(.black)
+                    ).frame(width: 300, height: 50, alignment: .center).background(Color.white).cornerRadius(10).multilineTextAlignment(.center).foregroundColor(.black).autocapitalization(.none)
                     SecureField("",
                                 text: $password,
                                 prompt: Text("Password")
                         .foregroundColor(.black)
-                    ).frame(width: 300, height: 50, alignment: .center).background(Color.white).cornerRadius(10).multilineTextAlignment(.center).foregroundColor(.black)
+                    ).frame(width: 300, height: 50, alignment: .center).background(Color.white).cornerRadius(10).multilineTextAlignment(.center).foregroundColor(.black).autocapitalization(.none)
                     Button("Sign Up") {
                         signUpUser()
                     }
