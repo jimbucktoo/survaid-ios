@@ -1,8 +1,22 @@
 import SwiftUI
+import FirebaseAuth
+import FirebaseDatabase
+import FirebaseDatabaseSwift
+import FirebaseStorage
 
 struct EditParticipantInformationView: View {
     @State private var textValue = ""
+    let user = Auth.auth().currentUser
+    private var dbRef = Database.database().reference()
+    private var storageRef = Storage.storage().reference()
     @Environment(\.dismiss) private var dismiss
+    
+    func updateParticipantInformation() {
+        if (textValue != ""){
+            dbRef.child("users/\(user?.uid ?? "")/participantInformation").setValue(textValue)
+        }
+        print("Updated Participant Information")
+    }
     
     var body: some View {
         ScrollView {
@@ -23,6 +37,7 @@ struct EditParticipantInformationView: View {
                 ).frame(width: 300, height: 50, alignment: .center).background(Color.white).cornerRadius(10).multilineTextAlignment(.center).foregroundColor(.black)
                 Spacer()
                 Button(action: {
+                    updateParticipantInformation()
                 }) {
                     Text("Save")
                         .padding(20)
